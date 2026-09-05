@@ -1,6 +1,6 @@
 {
   "scan_date": "2026-09-04",
-  "generated_at": "2026-09-05T13:27:58",
+  "generated_at": "2026-09-05T13:42:36",
   "universe_size": 438,
   "top_n": 20,
   "momentum_weights": {
@@ -12,6 +12,7 @@
   "buy_threshold": 60,
   "max_score": 125,
   "benchmark_label": "KOSPI",
+  "link_provider": "toss",
   "universe": {
     "listed_total": 1167,
     "source": "naver",

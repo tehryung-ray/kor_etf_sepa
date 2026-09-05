@@ -14,8 +14,17 @@
 import html
 from datetime import datetime
 from typing import Dict, List
+from urllib.parse import quote
 
 from .sepa import CRITERIA_LABELS, COMPONENT_MAX, COMPONENT_LABELS
+
+# 종목 링크 제공처. 코드는 수집 단계에서 ^[0-9A-Z]{6}$ 로 검증되지만,
+# URL에 넣기 전 한 번 더 인코딩한다.
+LINK_TEMPLATES = {
+    "toss":  ("토스증권", "https://tossinvest.com/stocks/{code}"),
+    "naver": ("네이버 금융", "https://finance.naver.com/item/main.naver?code={code}"),
+}
+DEFAULT_LINK_PROVIDER = "toss"
 
 PHASE_META = {
     1: ("베이스", "p1"),
@@ -102,6 +111,11 @@ h1{font-size:clamp(21px,4.4vw,29px);font-weight:800;letter-spacing:-.02em;text-w
 .tk{font-size:14.5px;font-weight:700;letter-spacing:-.01em;
   white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .tk .nm{display:block;font-size:11px;font-weight:400;color:var(--ink3);letter-spacing:.04em}
+/* 이름만 링크. 인라인이라 탭 영역이 글자에 한정되고, 나머지 행은 그대로 펼침 */
+.tk a.tklink{color:inherit;text-decoration:none;border-bottom:1px dotted #45557a}
+.tk a.tklink:after{content:'↗';font-size:9px;margin-left:3px;vertical-align:super;color:var(--ink3)}
+.tk a.tklink:hover,.tk a.tklink:focus-visible{color:var(--info);border-bottom-color:var(--info)}
+.tk a.tklink:hover:after,.tk a.tklink:focus-visible:after{color:var(--info)}
 .sect{
   display:inline-block;font-size:11px;font-weight:700;padding:2.5px 7px;
   border-radius:5px;background:#22304a;color:#a9bdd9;white-space:nowrap
@@ -174,6 +188,10 @@ h1{font-size:clamp(21px,4.4vw,29px);font-weight:800;letter-spacing:-.02em;text-w
 .fund .fl{font-size:10px;font-weight:700;letter-spacing:.06em;color:var(--ink3);
   word-break:keep-all;line-height:1.35}
 .fund .fv{font-size:14px;font-weight:700;margin-top:2px}
+
+.links{margin-top:12px;display:flex;flex-wrap:wrap;gap:8px 16px;font-size:12px}
+.links a{color:var(--info);text-decoration:none}
+.links a:hover{text-decoration:underline}
 
 .why{list-style:none;font-size:12.5px;color:var(--ink2)}
 .why li{padding:2.5px 0 2.5px 13px;position:relative}
@@ -257,6 +275,12 @@ def _aum(v) -> str:
     return f"{v:,.0f}억"
 
 
+def _stock_url(code: str, provider: str) -> tuple:
+    """(표시명, URL) — 설정된 증권사의 해당 종목 페이지."""
+    label, tmpl = LINK_TEMPLATES.get(provider, LINK_TEMPLATES[DEFAULT_LINK_PROVIDER])
+    return label, tmpl.format(code=quote(str(code), safe=""))
+
+
 def _score_color(score: float, threshold: int = 60) -> str:
     if score >= 90:
         return "var(--good)"
@@ -319,7 +343,7 @@ def _criteria(criteria: Dict) -> str:
     return "".join(rows)
 
 
-def _row(r: Dict, threshold: int, max_score: int) -> str:
+def _row(r: Dict, threshold: int, max_score: int, provider: str) -> str:
     phase_label, phase_cls = PHASE_META.get(r["phase"], ("—", "p1"))
     buy_cls = " buy" if r["is_buy"] else ""
 
@@ -366,14 +390,27 @@ def _row(r: Dict, threshold: int, max_score: int) -> str:
         extras.append(_esc(r["breakout"]))
     extras_html = (' · '.join(extras)) if extras else ''
 
-    naver = f'https://finance.naver.com/item/main.naver?code={_esc(r["code"])}'
+    # 이름 링크 — summary 안에 있으므로 클릭이 행 펼침으로 번지지 않게 막는다.
+    # (링크는 새 탭에서 열리고, 행 펼침은 이름 밖 아무 곳이나 누르면 된다)
+    primary_label, primary_url = _stock_url(r["code"], provider)
+    name_link = (
+        f'<a class="tklink" href="{_esc(primary_url)}" target="_blank"'
+        f' rel="noopener noreferrer" onclick="event.stopPropagation()"'
+        f' title="{_esc(primary_label)}에서 보기">{_esc(r["name"])}</a>'
+    )
+
+    detail_links = "".join(
+        f'<a href="{_esc(_stock_url(r["code"], key)[1])}" target="_blank"'
+        f' rel="noopener noreferrer">{_esc(_stock_url(r["code"], key)[0])}에서 보기 →</a>'
+        for key in LINK_TEMPLATES
+    )
 
     return f"""
 <details class="row{buy_cls}">
   <summary>
     <div class="cols">
       <div class="rank num">{r["rank"]}</div>
-      <div class="tk">{_esc(r["name"])}<span class="nm num">{_esc(r["code"])}</span></div>
+      <div class="tk">{name_link}<span class="nm num">{_esc(r["code"])}</span></div>
       <div class="sectwrap"><span class="sect">{_esc(r["category"])}</span></div>
       <div class="momwrap mom num">{_fmt(r["momentum_score"])}<small>모멘텀</small></div>
       <div class="phasewrap"><span class="phase {phase_cls}">P{r["phase"]} {phase_label}</span></div>
@@ -400,9 +437,7 @@ def _row(r: Dict, threshold: int, max_score: int) -> str:
     <div class="dtitle" style="margin-top:16px">채점 근거</div>
     <ul class="why">{reasons}</ul>
     {verdict}
-    <p style="margin-top:11px;font-size:12px">
-      <a href="{naver}" target="_blank" rel="noopener noreferrer"
-         style="color:var(--info);text-decoration:none">네이버 금융에서 보기 →</a></p>
+    <div class="links">{detail_links}</div>
   </div>
 </details>"""
 
@@ -450,7 +485,8 @@ def build_html(data: Dict) -> str:
         stale_note = ""
 
     now = datetime.now().strftime("%Y-%m-%d %H:%M")
-    rows = "".join(_row(r, threshold, max_score) for r in results)
+    provider = data.get("link_provider", DEFAULT_LINK_PROVIDER)
+    rows = "".join(_row(r, threshold, max_score, provider) for r in results)
 
     return f"""<!DOCTYPE html>
 <html lang="ko">
@@ -503,7 +539,7 @@ def build_html(data: Dict) -> str:
   <section class="sec">
     <div class="sec-head">
       <h2>모멘텀 랭킹 × SEPA 점수</h2>
-      <span class="sec-note">행을 눌러 점수 구성과 8개 조건을 펼쳐 보세요</span>
+      <span class="sec-note">행을 눌러 점수 구성과 8개 조건을 펼쳐 보세요 · ETF 이름을 누르면 {_esc(LINK_TEMPLATES.get(provider, LINK_TEMPLATES[DEFAULT_LINK_PROVIDER])[0])} 페이지가 새 탭에서 열립니다</span>
     </div>
 
     <div class="cols colhead">

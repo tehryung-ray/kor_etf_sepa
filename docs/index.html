@@ -83,6 +83,11 @@ h1{font-size:clamp(21px,4.4vw,29px);font-weight:800;letter-spacing:-.02em;text-w
 .tk{font-size:14.5px;font-weight:700;letter-spacing:-.01em;
   white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .tk .nm{display:block;font-size:11px;font-weight:400;color:var(--ink3);letter-spacing:.04em}
+/* 이름만 링크. 인라인이라 탭 영역이 글자에 한정되고, 나머지 행은 그대로 펼침 */
+.tk a.tklink{color:inherit;text-decoration:none;border-bottom:1px dotted #45557a}
+.tk a.tklink:after{content:'↗';font-size:9px;margin-left:3px;vertical-align:super;color:var(--ink3)}
+.tk a.tklink:hover,.tk a.tklink:focus-visible{color:var(--info);border-bottom-color:var(--info)}
+.tk a.tklink:hover:after,.tk a.tklink:focus-visible:after{color:var(--info)}
 .sect{
   display:inline-block;font-size:11px;font-weight:700;padding:2.5px 7px;
   border-radius:5px;background:#22304a;color:#a9bdd9;white-space:nowrap
@@ -155,6 +160,10 @@ h1{font-size:clamp(21px,4.4vw,29px);font-weight:800;letter-spacing:-.02em;text-w
 .fund .fl{font-size:10px;font-weight:700;letter-spacing:.06em;color:var(--ink3);
   word-break:keep-all;line-height:1.35}
 .fund .fv{font-size:14px;font-weight:700;margin-top:2px}
+
+.links{margin-top:12px;display:flex;flex-wrap:wrap;gap:8px 16px;font-size:12px}
+.links a{color:var(--info);text-decoration:none}
+.links a:hover{text-decoration:underline}
 
 .why{list-style:none;font-size:12.5px;color:var(--ink2)}
 .why li{padding:2.5px 0 2.5px 13px;position:relative}
@@ -259,7 +268,7 @@ footer b{color:var(--ink2)}
   <section class="sec">
     <div class="sec-head">
       <h2>모멘텀 랭킹 × SEPA 점수</h2>
-      <span class="sec-note">행을 눌러 점수 구성과 8개 조건을 펼쳐 보세요</span>
+      <span class="sec-note">행을 눌러 점수 구성과 8개 조건을 펼쳐 보세요 · ETF 이름을 누르면 토스증권 페이지가 새 탭에서 열립니다</span>
     </div>
 
     <div class="cols colhead">
@@ -272,7 +281,7 @@ footer b{color:var(--ink2)}
   <summary>
     <div class="cols">
       <div class="rank num">1</div>
-      <div class="tk">SOL 화장품TOP3플러스<span class="nm num">0008T0</span></div>
+      <div class="tk"><a class="tklink" href="https://tossinvest.com/stocks/0008T0" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()" title="토스증권에서 보기">SOL 화장품TOP3플러스</a><span class="nm num">0008T0</span></div>
       <div class="sectwrap"><span class="sect">업종·테마</span></div>
       <div class="momwrap mom num">5.49<small>모멘텀</small></div>
       <div class="phasewrap"><span class="phase p2">P2 상승추세</span></div>
@@ -299,16 +308,14 @@ footer b{color:var(--ink2)}
     <div class="dtitle" style="margin-top:16px">채점 근거</div>
     <ul class="why"><li>강한 상승추세: 50일선 +15.1%</li><li>이평선 강한 상승 (50:0.651 / 200:0.182)</li><li>🟢 순자산 1,224억원</li><li>🟢 거래대금 20일 평균 379억/일 (호가 두터움)</li><li>✓ NAV 괴리율 -0.05% (정상)</li><li>⚠ 하락일 거래량 우위 (비율 0.00 — 분산 매도)</li><li>✓ 강한 상대강도: 0.842 (KOSPI 대비 초과수익)</li><li>🟢 탁월한 손익비: 10.0:1 (상승 5,564원 / 위험 556원)</li><li>🟢 52주 고가 근접: 고가 대비 11.8%</li></ul>
     <div class="block pass">✅ 매수 적격 — Phase 2 · Trend Template 통과 · SEPA 임계값 충족</div>
-    <p style="margin-top:11px;font-size:12px">
-      <a href="https://finance.naver.com/item/main.naver?code=0008T0" target="_blank" rel="noopener noreferrer"
-         style="color:var(--info);text-decoration:none">네이버 금융에서 보기 →</a></p>
+    <div class="links"><a href="https://tossinvest.com/stocks/0008T0" target="_blank" rel="noopener noreferrer">토스증권에서 보기 →</a><a href="https://finance.naver.com/item/main.naver?code=0008T0" target="_blank" rel="noopener noreferrer">네이버 금융에서 보기 →</a></div>
   </div>
 </details>
 <details class="row">
   <summary>
     <div class="cols">
       <div class="rank num">2</div>
-      <div class="tk">IBK K-AI반도체코어테크<span class="nm num">0005G0</span></div>
+      <div class="tk"><a class="tklink" href="https://tossinvest.com/stocks/0005G0" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()" title="토스증권에서 보기">IBK K-AI반도체코어테크</a><span class="nm num">0005G0</span></div>
       <div class="sectwrap"><span class="sect">업종·테마</span></div>
       <div class="momwrap mom num">4.68<small>모멘텀</small></div>
       <div class="phasewrap"><span class="phase p1">P1 베이스</span></div>
@@ -335,16 +342,14 @@ footer b{color:var(--ink2)}
     <div class="dtitle" style="margin-top:16px">채점 근거</div>
     <ul class="why"><li>⚠ 50일선 이탈: -1.8%</li><li>⚠ 이평선 횡보 또는 하락</li><li>🟢 순자산 1,722억원</li><li>🟢 거래대금 20일 평균 11.3억/일</li><li>⚠ NAV 괴리율 -0.62% (저평가 거래)</li><li>✓ 상승일 거래량 우위 (비율 1.46)</li><li>✓ 강한 상대강도: 0.205 (KOSPI 대비 초과수익)</li><li>🟡 수용 가능한 손익비: 2.7:1</li><li>양호한 진입 구간: 50일선 -1.8%</li></ul>
     <div class="block">⏸ 매수 보류 — Phase 1 (미너비니는 Phase 2만 매수)</div>
-    <p style="margin-top:11px;font-size:12px">
-      <a href="https://finance.naver.com/item/main.naver?code=0005G0" target="_blank" rel="noopener noreferrer"
-         style="color:var(--info);text-decoration:none">네이버 금융에서 보기 →</a></p>
+    <div class="links"><a href="https://tossinvest.com/stocks/0005G0" target="_blank" rel="noopener noreferrer">토스증권에서 보기 →</a><a href="https://finance.naver.com/item/main.naver?code=0005G0" target="_blank" rel="noopener noreferrer">네이버 금융에서 보기 →</a></div>
   </div>
 </details>
 <details class="row">
   <summary>
     <div class="cols">
       <div class="rank num">3</div>
-      <div class="tk">HANARO Fn K-반도체<span class="nm num">395270</span></div>
+      <div class="tk"><a class="tklink" href="https://tossinvest.com/stocks/395270" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()" title="토스증권에서 보기">HANARO Fn K-반도체</a><span class="nm num">395270</span></div>
       <div class="sectwrap"><span class="sect">업종·테마</span></div>
       <div class="momwrap mom num">4.59<small>모멘텀</small></div>
       <div class="phasewrap"><span class="phase p1">P1 베이스</span></div>
@@ -371,16 +376,14 @@ footer b{color:var(--ink2)}
     <div class="dtitle" style="margin-top:16px">채점 근거</div>
     <ul class="why"><li>⚠ 50일선 이탈: -6.9%</li><li>⚠ 이평선 횡보 또는 하락</li><li>🟢 순자산 3.5조원 (대형 · 청산 위험 낮음)</li><li>🟢 거래대금 20일 평균 620억/일 (호가 두터움)</li><li>✓ NAV 괴리율 -0.16% (정상)</li><li>거래량 중립 (비율 0.99)</li><li>✓ 강한 상대강도: 0.117 (KOSPI 대비 초과수익)</li><li>🟢 양호한 손익비: 3.4:1</li><li>진입 구간 이탈: 50일선 -6.9%</li></ul>
     <div class="block">⏸ 매수 보류 — Phase 1 (미너비니는 Phase 2만 매수)</div>
-    <p style="margin-top:11px;font-size:12px">
-      <a href="https://finance.naver.com/item/main.naver?code=395270" target="_blank" rel="noopener noreferrer"
-         style="color:var(--info);text-decoration:none">네이버 금융에서 보기 →</a></p>
+    <div class="links"><a href="https://tossinvest.com/stocks/395270" target="_blank" rel="noopener noreferrer">토스증권에서 보기 →</a><a href="https://finance.naver.com/item/main.naver?code=395270" target="_blank" rel="noopener noreferrer">네이버 금융에서 보기 →</a></div>
   </div>
 </details>
 <details class="row">
   <summary>
     <div class="cols">
       <div class="rank num">4</div>
-      <div class="tk">RISE 네트워크인프라<span class="nm num">367760</span></div>
+      <div class="tk"><a class="tklink" href="https://tossinvest.com/stocks/367760" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()" title="토스증권에서 보기">RISE 네트워크인프라</a><span class="nm num">367760</span></div>
       <div class="sectwrap"><span class="sect">업종·테마</span></div>
       <div class="momwrap mom num">4.56<small>모멘텀</small></div>
       <div class="phasewrap"><span class="phase p1">P1 베이스</span></div>
@@ -407,16 +410,14 @@ footer b{color:var(--ink2)}
     <div class="dtitle" style="margin-top:16px">채점 근거</div>
     <ul class="why"><li>⚠ 50일선 이탈: -5.5%</li><li>⚠ 이평선 횡보 또는 하락</li><li>🟢 순자산 6,634억원</li><li>🟢 거래대금 20일 평균 121억/일 (호가 두터움)</li><li>🟡 NAV 괴리율 -0.28%</li><li>거래량 중립 (비율 1.02)</li><li>양(+)의 상대강도: 0.064</li><li>🟢 양호한 손익비: 3.2:1</li><li>진입 구간 이탈: 50일선 -5.5%</li></ul>
     <div class="block">⏸ 매수 보류 — Phase 1 (미너비니는 Phase 2만 매수)</div>
-    <p style="margin-top:11px;font-size:12px">
-      <a href="https://finance.naver.com/item/main.naver?code=367760" target="_blank" rel="noopener noreferrer"
-         style="color:var(--info);text-decoration:none">네이버 금융에서 보기 →</a></p>
+    <div class="links"><a href="https://tossinvest.com/stocks/367760" target="_blank" rel="noopener noreferrer">토스증권에서 보기 →</a><a href="https://finance.naver.com/item/main.naver?code=367760" target="_blank" rel="noopener noreferrer">네이버 금융에서 보기 →</a></div>
   </div>
 </details>
 <details class="row buy">
   <summary>
     <div class="cols">
       <div class="rank num">5</div>
-      <div class="tk">KODEX WTI원유선물(H)<span class="nm num">261220</span></div>
+      <div class="tk"><a class="tklink" href="https://tossinvest.com/stocks/261220" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()" title="토스증권에서 보기">KODEX WTI원유선물(H)</a><span class="nm num">261220</span></div>
       <div class="sectwrap"><span class="sect">원자재</span></div>
       <div class="momwrap mom num">4.48<small>모멘텀</small></div>
       <div class="phasewrap"><span class="phase p2">P2 상승추세</span></div>
@@ -443,16 +444,14 @@ footer b{color:var(--ink2)}
     <div class="dtitle" style="margin-top:16px">채점 근거</div>
     <ul class="why"><li>강한 상승추세: 50일선 +15.1%</li><li>이평선 완만한 상승</li><li>🟡 순자산 514억원 (중소형)</li><li>🟢 거래대금 20일 평균 24.5억/일</li><li>✓ NAV 괴리율 -0.12% (정상)</li><li>상승일 거래량 소폭 우위 (비율 1.20)</li><li>✓ 강한 상대강도: 0.398 (KOSPI 대비 초과수익)</li><li>🟢 양호한 손익비: 3.0:1</li><li>🟢 52주 고가 근접: 고가 대비 11.1%</li></ul>
     <div class="block pass">✅ 매수 적격 — Phase 2 · Trend Template 통과 · SEPA 임계값 충족</div>
-    <p style="margin-top:11px;font-size:12px">
-      <a href="https://finance.naver.com/item/main.naver?code=261220" target="_blank" rel="noopener noreferrer"
-         style="color:var(--info);text-decoration:none">네이버 금융에서 보기 →</a></p>
+    <div class="links"><a href="https://tossinvest.com/stocks/261220" target="_blank" rel="noopener noreferrer">토스증권에서 보기 →</a><a href="https://finance.naver.com/item/main.naver?code=261220" target="_blank" rel="noopener noreferrer">네이버 금융에서 보기 →</a></div>
   </div>
 </details>
 <details class="row">
   <summary>
     <div class="cols">
       <div class="rank num">6</div>
-      <div class="tk">KODEX 200IT TR<span class="nm num">363580</span></div>
+      <div class="tk"><a class="tklink" href="https://tossinvest.com/stocks/363580" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()" title="토스증권에서 보기">KODEX 200IT TR</a><span class="nm num">363580</span></div>
       <div class="sectwrap"><span class="sect">업종·테마</span></div>
       <div class="momwrap mom num">4.37<small>모멘텀</small></div>
       <div class="phasewrap"><span class="phase p1">P1 베이스</span></div>
@@ -479,16 +478,14 @@ footer b{color:var(--ink2)}
     <div class="dtitle" style="margin-top:16px">채점 근거</div>
     <ul class="why"><li>⚠ 50일선 이탈: -5.0%</li><li>⚠ 이평선 횡보 또는 하락</li><li>🟢 순자산 2,327억원</li><li>🟢 거래대금 20일 평균 52.1억/일</li><li>🟡 NAV 괴리율 -0.30%</li><li>상승일 거래량 소폭 우위 (비율 1.18)</li><li>✓ 강한 상대강도: 0.122 (KOSPI 대비 초과수익)</li><li>🟢 양호한 손익비: 3.2:1</li><li>진입 구간 이탈: 50일선 -5.0%</li></ul>
     <div class="block">⏸ 매수 보류 — Phase 1 (미너비니는 Phase 2만 매수)</div>
-    <p style="margin-top:11px;font-size:12px">
-      <a href="https://finance.naver.com/item/main.naver?code=363580" target="_blank" rel="noopener noreferrer"
-         style="color:var(--info);text-decoration:none">네이버 금융에서 보기 →</a></p>
+    <div class="links"><a href="https://tossinvest.com/stocks/363580" target="_blank" rel="noopener noreferrer">토스증권에서 보기 →</a><a href="https://finance.naver.com/item/main.naver?code=363580" target="_blank" rel="noopener noreferrer">네이버 금융에서 보기 →</a></div>
   </div>
 </details>
 <details class="row">
   <summary>
     <div class="cols">
       <div class="rank num">7</div>
-      <div class="tk">PLUS 글로벌HBM반도체<span class="nm num">442580</span></div>
+      <div class="tk"><a class="tklink" href="https://tossinvest.com/stocks/442580" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()" title="토스증권에서 보기">PLUS 글로벌HBM반도체</a><span class="nm num">442580</span></div>
       <div class="sectwrap"><span class="sect">해외주식</span></div>
       <div class="momwrap mom num">4.24<small>모멘텀</small></div>
       <div class="phasewrap"><span class="phase p1">P1 베이스</span></div>
@@ -515,16 +512,14 @@ footer b{color:var(--ink2)}
     <div class="dtitle" style="margin-top:16px">채점 근거</div>
     <ul class="why"><li>⚠ 50일선 이탈: -9.5%</li><li>⚠ 이평선 횡보 또는 하락</li><li>🟢 순자산 1.7조원 (대형 · 청산 위험 낮음)</li><li>🟢 거래대금 20일 평균 568억/일 (호가 두터움)</li><li>⚠ NAV 괴리율 +0.52% (고평가 거래 — 프리미엄 지불)</li><li>상승일 거래량 소폭 우위 (비율 1.22)</li><li>⚠ 상대강도 하락: -0.130 (KOSPI 대비 부진)</li><li>🟢 양호한 손익비: 3.8:1</li><li>진입 구간 이탈: 50일선 -9.5%</li></ul>
     <div class="block">⏸ 매수 보류 — Phase 1 (미너비니는 Phase 2만 매수)</div>
-    <p style="margin-top:11px;font-size:12px">
-      <a href="https://finance.naver.com/item/main.naver?code=442580" target="_blank" rel="noopener noreferrer"
-         style="color:var(--info);text-decoration:none">네이버 금융에서 보기 →</a></p>
+    <div class="links"><a href="https://tossinvest.com/stocks/442580" target="_blank" rel="noopener noreferrer">토스증권에서 보기 →</a><a href="https://finance.naver.com/item/main.naver?code=442580" target="_blank" rel="noopener noreferrer">네이버 금융에서 보기 →</a></div>
   </div>
 </details>
 <details class="row buy">
   <summary>
     <div class="cols">
       <div class="rank num">8</div>
-      <div class="tk">TIGER 화장품<span class="nm num">228790</span></div>
+      <div class="tk"><a class="tklink" href="https://tossinvest.com/stocks/228790" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()" title="토스증권에서 보기">TIGER 화장품</a><span class="nm num">228790</span></div>
       <div class="sectwrap"><span class="sect">업종·테마</span></div>
       <div class="momwrap mom num">4.18<small>모멘텀</small></div>
       <div class="phasewrap"><span class="phase p2">P2 상승추세</span></div>
@@ -551,16 +546,14 @@ footer b{color:var(--ink2)}
     <div class="dtitle" style="margin-top:16px">채점 근거</div>
     <ul class="why"><li>강한 상승추세: 50일선 +11.3%</li><li>이평선 강한 상승 (50:0.651 / 200:0.134)</li><li>🟢 순자산 2,820억원</li><li>🟢 거래대금 20일 평균 424억/일 (호가 두터움)</li><li>🟡 NAV 괴리율 -0.48%</li><li>⚠ 하락일 거래량 우위 (비율 0.00 — 분산 매도)</li><li>✓ 강한 상대강도: 0.473 (KOSPI 대비 초과수익)</li><li>🟢 탁월한 손익비: 10.0:1 (상승 1,356원 / 위험 136원)</li><li>🟢 52주 고가 근접: 고가 대비 11.6%</li></ul>
     <div class="block pass">✅ 매수 적격 — Phase 2 · Trend Template 통과 · SEPA 임계값 충족</div>
-    <p style="margin-top:11px;font-size:12px">
-      <a href="https://finance.naver.com/item/main.naver?code=228790" target="_blank" rel="noopener noreferrer"
-         style="color:var(--info);text-decoration:none">네이버 금융에서 보기 →</a></p>
+    <div class="links"><a href="https://tossinvest.com/stocks/228790" target="_blank" rel="noopener noreferrer">토스증권에서 보기 →</a><a href="https://finance.naver.com/item/main.naver?code=228790" target="_blank" rel="noopener noreferrer">네이버 금융에서 보기 →</a></div>
   </div>
 </details>
 <details class="row">
   <summary>
     <div class="cols">
       <div class="rank num">9</div>
-      <div class="tk">TIGER 200 IT<span class="nm num">139260</span></div>
+      <div class="tk"><a class="tklink" href="https://tossinvest.com/stocks/139260" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()" title="토스증권에서 보기">TIGER 200 IT</a><span class="nm num">139260</span></div>
       <div class="sectwrap"><span class="sect">업종·테마</span></div>
       <div class="momwrap mom num">4.08<small>모멘텀</small></div>
       <div class="phasewrap"><span class="phase p1">P1 베이스</span></div>
@@ -587,16 +580,14 @@ footer b{color:var(--ink2)}
     <div class="dtitle" style="margin-top:16px">채점 근거</div>
     <ul class="why"><li>⚠ 50일선 이탈: -5.7%</li><li>⚠ 이평선 횡보 또는 하락</li><li>🟢 순자산 2.6조원 (대형 · 청산 위험 낮음)</li><li>🟢 거래대금 20일 평균 547억/일 (호가 두터움)</li><li>🟡 NAV 괴리율 -0.26%</li><li>거래량 중립 (비율 0.99)</li><li>✓ 강한 상대강도: 0.129 (KOSPI 대비 초과수익)</li><li>🟢 양호한 손익비: 3.3:1</li><li>진입 구간 이탈: 50일선 -5.7%</li></ul>
     <div class="block">⏸ 매수 보류 — Phase 1 (미너비니는 Phase 2만 매수)</div>
-    <p style="margin-top:11px;font-size:12px">
-      <a href="https://finance.naver.com/item/main.naver?code=139260" target="_blank" rel="noopener noreferrer"
-         style="color:var(--info);text-decoration:none">네이버 금융에서 보기 →</a></p>
+    <div class="links"><a href="https://tossinvest.com/stocks/139260" target="_blank" rel="noopener noreferrer">토스증권에서 보기 →</a><a href="https://finance.naver.com/item/main.naver?code=139260" target="_blank" rel="noopener noreferrer">네이버 금융에서 보기 →</a></div>
   </div>
 </details>
 <details class="row">
   <summary>
     <div class="cols">
       <div class="rank num">10</div>
-      <div class="tk">UNICORN SK하이닉스밸류체인액티브<span class="nm num">494220</span></div>
+      <div class="tk"><a class="tklink" href="https://tossinvest.com/stocks/494220" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()" title="토스증권에서 보기">UNICORN SK하이닉스밸류체인액티브</a><span class="nm num">494220</span></div>
       <div class="sectwrap"><span class="sect">업종·테마</span></div>
       <div class="momwrap mom num">4.02<small>모멘텀</small></div>
       <div class="phasewrap"><span class="phase p1">P1 베이스</span></div>
@@ -623,16 +614,14 @@ footer b{color:var(--ink2)}
     <div class="dtitle" style="margin-top:16px">채점 근거</div>
     <ul class="why"><li>⚠ 50일선 이탈: -5.0%</li><li>⚠ 이평선 횡보 또는 하락</li><li>🟢 순자산 1,606억원</li><li>🟢 거래대금 20일 평균 46.2억/일</li><li>🟡 NAV 괴리율 -0.34%</li><li>⚠ 하락일 거래량 우위 (비율 0.74 — 분산 매도)</li><li>양(+)의 상대강도: 0.035</li><li>🟢 양호한 손익비: 3.2:1</li><li>진입 구간 이탈: 50일선 -5.0%</li></ul>
     <div class="block">⏸ 매수 보류 — Phase 1 (미너비니는 Phase 2만 매수)</div>
-    <p style="margin-top:11px;font-size:12px">
-      <a href="https://finance.naver.com/item/main.naver?code=494220" target="_blank" rel="noopener noreferrer"
-         style="color:var(--info);text-decoration:none">네이버 금융에서 보기 →</a></p>
+    <div class="links"><a href="https://tossinvest.com/stocks/494220" target="_blank" rel="noopener noreferrer">토스증권에서 보기 →</a><a href="https://finance.naver.com/item/main.naver?code=494220" target="_blank" rel="noopener noreferrer">네이버 금융에서 보기 →</a></div>
   </div>
 </details>
 <details class="row buy">
   <summary>
     <div class="cols">
       <div class="rank num">11</div>
-      <div class="tk">KODEX 보험<span class="nm num">140700</span></div>
+      <div class="tk"><a class="tklink" href="https://tossinvest.com/stocks/140700" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()" title="토스증권에서 보기">KODEX 보험</a><span class="nm num">140700</span></div>
       <div class="sectwrap"><span class="sect">업종·테마</span></div>
       <div class="momwrap mom num">3.87<small>모멘텀</small></div>
       <div class="phasewrap"><span class="phase p2">P2 상승추세</span></div>
@@ -659,16 +648,14 @@ footer b{color:var(--ink2)}
     <div class="dtitle" style="margin-top:16px">채점 근거</div>
     <ul class="why"><li>양호한 상승추세: 50일선 +8.4%</li><li>이평선 강한 상승 (50:0.068 / 200:0.278)</li><li>🟡 순자산 595억원 (중소형)</li><li>🟢 거래대금 20일 평균 42.7억/일</li><li>🟡 NAV 괴리율 -0.34%</li><li>✓ 상승일 거래량 우위 (비율 2.65)</li><li>✓ 강한 상대강도: 0.517 (KOSPI 대비 초과수익)</li><li>🟢 탁월한 손익비: 5.0:1 (상승 6,380원 / 위험 1,270원)</li><li>🟢 52주 고가 근접: 고가 대비 5.7%</li></ul>
     <div class="block pass">✅ 매수 적격 — Phase 2 · Trend Template 통과 · SEPA 임계값 충족</div>
-    <p style="margin-top:11px;font-size:12px">
-      <a href="https://finance.naver.com/item/main.naver?code=140700" target="_blank" rel="noopener noreferrer"
-         style="color:var(--info);text-decoration:none">네이버 금융에서 보기 →</a></p>
+    <div class="links"><a href="https://tossinvest.com/stocks/140700" target="_blank" rel="noopener noreferrer">토스증권에서 보기 →</a><a href="https://finance.naver.com/item/main.naver?code=140700" target="_blank" rel="noopener noreferrer">네이버 금융에서 보기 →</a></div>
   </div>
 </details>
 <details class="row">
   <summary>
     <div class="cols">
       <div class="rank num">12</div>
-      <div class="tk">WON 반도체밸류체인액티브<span class="nm num">474590</span></div>
+      <div class="tk"><a class="tklink" href="https://tossinvest.com/stocks/474590" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()" title="토스증권에서 보기">WON 반도체밸류체인액티브</a><span class="nm num">474590</span></div>
       <div class="sectwrap"><span class="sect">업종·테마</span></div>
       <div class="momwrap mom num">3.71<small>모멘텀</small></div>
       <div class="phasewrap"><span class="phase p1">P1 베이스</span></div>
@@ -695,16 +682,14 @@ footer b{color:var(--ink2)}
     <div class="dtitle" style="margin-top:16px">채점 근거</div>
     <ul class="why"><li>⚠ 50일선 이탈: -5.9%</li><li>⚠ 이평선 횡보 또는 하락</li><li>🟢 순자산 3,345억원</li><li>🟢 거래대금 20일 평균 24.0억/일</li><li>⚠ NAV 괴리율 -0.66% (저평가 거래)</li><li>✓ 상승일 거래량 우위 (비율 3.37)</li><li>약한 상대강도: -0.071</li><li>🟢 양호한 손익비: 3.3:1</li><li>진입 구간 이탈: 50일선 -5.9%</li></ul>
     <div class="block">⏸ 매수 보류 — Phase 1 (미너비니는 Phase 2만 매수)</div>
-    <p style="margin-top:11px;font-size:12px">
-      <a href="https://finance.naver.com/item/main.naver?code=474590" target="_blank" rel="noopener noreferrer"
-         style="color:var(--info);text-decoration:none">네이버 금융에서 보기 →</a></p>
+    <div class="links"><a href="https://tossinvest.com/stocks/474590" target="_blank" rel="noopener noreferrer">토스증권에서 보기 →</a><a href="https://finance.naver.com/item/main.naver?code=474590" target="_blank" rel="noopener noreferrer">네이버 금융에서 보기 →</a></div>
   </div>
 </details>
 <details class="row">
   <summary>
     <div class="cols">
       <div class="rank num">13</div>
-      <div class="tk">KODEX IT<span class="nm num">266370</span></div>
+      <div class="tk"><a class="tklink" href="https://tossinvest.com/stocks/266370" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()" title="토스증권에서 보기">KODEX IT</a><span class="nm num">266370</span></div>
       <div class="sectwrap"><span class="sect">업종·테마</span></div>
       <div class="momwrap mom num">3.64<small>모멘텀</small></div>
       <div class="phasewrap"><span class="phase p1">P1 베이스</span></div>
@@ -731,16 +716,14 @@ footer b{color:var(--ink2)}
     <div class="dtitle" style="margin-top:16px">채점 근거</div>
     <ul class="why"><li>⚠ 50일선 이탈: -3.9%</li><li>⚠ 이평선 횡보 또는 하락</li><li>🟢 순자산 1,058억원</li><li>🟢 거래대금 20일 평균 33.2억/일</li><li>✓ NAV 괴리율 -0.18% (정상)</li><li>✓ 상승일 거래량 우위 (비율 1.69)</li><li>✓ 강한 상대강도: 0.217 (KOSPI 대비 초과수익)</li><li>🟢 양호한 손익비: 3.0:1</li><li>양호한 진입 구간: 50일선 -3.9%</li></ul>
     <div class="block">⏸ 매수 보류 — Phase 1 (미너비니는 Phase 2만 매수)</div>
-    <p style="margin-top:11px;font-size:12px">
-      <a href="https://finance.naver.com/item/main.naver?code=266370" target="_blank" rel="noopener noreferrer"
-         style="color:var(--info);text-decoration:none">네이버 금융에서 보기 →</a></p>
+    <div class="links"><a href="https://tossinvest.com/stocks/266370" target="_blank" rel="noopener noreferrer">토스증권에서 보기 →</a><a href="https://finance.naver.com/item/main.naver?code=266370" target="_blank" rel="noopener noreferrer">네이버 금융에서 보기 →</a></div>
   </div>
 </details>
 <details class="row">
   <summary>
     <div class="cols">
       <div class="rank num">14</div>
-      <div class="tk">ACE AI반도체TOP3+<span class="nm num">469150</span></div>
+      <div class="tk"><a class="tklink" href="https://tossinvest.com/stocks/469150" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()" title="토스증권에서 보기">ACE AI반도체TOP3+</a><span class="nm num">469150</span></div>
       <div class="sectwrap"><span class="sect">업종·테마</span></div>
       <div class="momwrap mom num">3.25<small>모멘텀</small></div>
       <div class="phasewrap"><span class="phase p1">P1 베이스</span></div>
@@ -767,16 +750,14 @@ footer b{color:var(--ink2)}
     <div class="dtitle" style="margin-top:16px">채점 근거</div>
     <ul class="why"><li>⚠ 50일선 이탈: -3.1%</li><li>⚠ 이평선 횡보 또는 하락</li><li>🟢 순자산 1.1조원 (대형 · 청산 위험 낮음)</li><li>🟢 거래대금 20일 평균 242억/일 (호가 두터움)</li><li>🟡 NAV 괴리율 -0.25%</li><li>거래량 중립 (비율 1.05)</li><li>✓ 강한 상대강도: 0.131 (KOSPI 대비 초과수익)</li><li>🟡 수용 가능한 손익비: 2.9:1</li><li>양호한 진입 구간: 50일선 -3.1%</li></ul>
     <div class="block">⏸ 매수 보류 — Phase 1 (미너비니는 Phase 2만 매수)</div>
-    <p style="margin-top:11px;font-size:12px">
-      <a href="https://finance.naver.com/item/main.naver?code=469150" target="_blank" rel="noopener noreferrer"
-         style="color:var(--info);text-decoration:none">네이버 금융에서 보기 →</a></p>
+    <div class="links"><a href="https://tossinvest.com/stocks/469150" target="_blank" rel="noopener noreferrer">토스증권에서 보기 →</a><a href="https://finance.naver.com/item/main.naver?code=469150" target="_blank" rel="noopener noreferrer">네이버 금융에서 보기 →</a></div>
   </div>
 </details>
 <details class="row">
   <summary>
     <div class="cols">
       <div class="rank num">15</div>
-      <div class="tk">ACE 라이프자산주주가치액티브<span class="nm num">494330</span></div>
+      <div class="tk"><a class="tklink" href="https://tossinvest.com/stocks/494330" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()" title="토스증권에서 보기">ACE 라이프자산주주가치액티브</a><span class="nm num">494330</span></div>
       <div class="sectwrap"><span class="sect">업종·테마</span></div>
       <div class="momwrap mom num">3.22<small>모멘텀</small></div>
       <div class="phasewrap"><span class="phase p1">P1 베이스</span></div>
@@ -803,16 +784,14 @@ footer b{color:var(--ink2)}
     <div class="dtitle" style="margin-top:16px">채점 근거</div>
     <ul class="why"><li>약한 상승추세: 50일선 +1.6%</li><li>⚠ 이평선 횡보 또는 하락</li><li>🟢 순자산 1,790억원</li><li>🟢 거래대금 20일 평균 12.5억/일</li><li>✓ NAV 괴리율 -0.06% (정상)</li><li>✓ 상승일 거래량 우위 (비율 1.75)</li><li>약한 상대강도: -0.049</li><li>🟡 수용 가능한 손익비: 2.3:1</li><li>✓ 최적 돌파 구간: 50일선 1.6%</li></ul>
     <div class="block">⏸ 매수 보류 — Phase 1 (미너비니는 Phase 2만 매수)</div>
-    <p style="margin-top:11px;font-size:12px">
-      <a href="https://finance.naver.com/item/main.naver?code=494330" target="_blank" rel="noopener noreferrer"
-         style="color:var(--info);text-decoration:none">네이버 금융에서 보기 →</a></p>
+    <div class="links"><a href="https://tossinvest.com/stocks/494330" target="_blank" rel="noopener noreferrer">토스증권에서 보기 →</a><a href="https://finance.naver.com/item/main.naver?code=494330" target="_blank" rel="noopener noreferrer">네이버 금융에서 보기 →</a></div>
   </div>
 </details>
 <details class="row">
   <summary>
     <div class="cols">
       <div class="rank num">16</div>
-      <div class="tk">KODEX AI반도체TOP2플러스<span class="nm num">395160</span></div>
+      <div class="tk"><a class="tklink" href="https://tossinvest.com/stocks/395160" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()" title="토스증권에서 보기">KODEX AI반도체TOP2플러스</a><span class="nm num">395160</span></div>
       <div class="sectwrap"><span class="sect">업종·테마</span></div>
       <div class="momwrap mom num">3.10<small>모멘텀</small></div>
       <div class="phasewrap"><span class="phase p1">P1 베이스</span></div>
@@ -839,16 +818,14 @@ footer b{color:var(--ink2)}
     <div class="dtitle" style="margin-top:16px">채점 근거</div>
     <ul class="why"><li>⚠ 50일선 이탈: -7.3%</li><li>⚠ 이평선 횡보 또는 하락</li><li>🟢 순자산 3.9조원 (대형 · 청산 위험 낮음)</li><li>🟢 거래대금 20일 평균 1,795억/일 (호가 두터움)</li><li>✓ NAV 괴리율 -0.13% (정상)</li><li>상승일 거래량 소폭 우위 (비율 1.12)</li><li>양(+)의 상대강도: 0.094</li><li>🟢 양호한 손익비: 3.5:1</li><li>진입 구간 이탈: 50일선 -7.3%</li></ul>
     <div class="block">⏸ 매수 보류 — Phase 1 (미너비니는 Phase 2만 매수)</div>
-    <p style="margin-top:11px;font-size:12px">
-      <a href="https://finance.naver.com/item/main.naver?code=395160" target="_blank" rel="noopener noreferrer"
-         style="color:var(--info);text-decoration:none">네이버 금융에서 보기 →</a></p>
+    <div class="links"><a href="https://tossinvest.com/stocks/395160" target="_blank" rel="noopener noreferrer">토스증권에서 보기 →</a><a href="https://finance.naver.com/item/main.naver?code=395160" target="_blank" rel="noopener noreferrer">네이버 금융에서 보기 →</a></div>
   </div>
 </details>
 <details class="row">
   <summary>
     <div class="cols">
       <div class="rank num">17</div>
-      <div class="tk">SOL 반도체전공정<span class="nm num">475300</span></div>
+      <div class="tk"><a class="tklink" href="https://tossinvest.com/stocks/475300" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()" title="토스증권에서 보기">SOL 반도체전공정</a><span class="nm num">475300</span></div>
       <div class="sectwrap"><span class="sect">업종·테마</span></div>
       <div class="momwrap mom num">3.07<small>모멘텀</small></div>
       <div class="phasewrap"><span class="phase p1">P1 베이스</span></div>
@@ -875,16 +852,14 @@ footer b{color:var(--ink2)}
     <div class="dtitle" style="margin-top:16px">채점 근거</div>
     <ul class="why"><li>⚠ 50일선 이탈: -1.4%</li><li>⚠ 이평선 횡보 또는 하락</li><li>🟢 순자산 2,725억원</li><li>🟢 거래대금 20일 평균 316억/일 (호가 두터움)</li><li>✓ NAV 괴리율 +0.05% (정상)</li><li>거래량 중립 (비율 1.04)</li><li>✓ 강한 상대강도: 0.156 (KOSPI 대비 초과수익)</li><li>🟡 수용 가능한 손익비: 2.7:1</li><li>양호한 진입 구간: 50일선 -1.4%</li></ul>
     <div class="block">⏸ 매수 보류 — Phase 1 (미너비니는 Phase 2만 매수)</div>
-    <p style="margin-top:11px;font-size:12px">
-      <a href="https://finance.naver.com/item/main.naver?code=475300" target="_blank" rel="noopener noreferrer"
-         style="color:var(--info);text-decoration:none">네이버 금융에서 보기 →</a></p>
+    <div class="links"><a href="https://tossinvest.com/stocks/475300" target="_blank" rel="noopener noreferrer">토스증권에서 보기 →</a><a href="https://finance.naver.com/item/main.naver?code=475300" target="_blank" rel="noopener noreferrer">네이버 금융에서 보기 →</a></div>
   </div>
 </details>
 <details class="row">
   <summary>
     <div class="cols">
       <div class="rank num">18</div>
-      <div class="tk">TIGER 반도체<span class="nm num">091230</span></div>
+      <div class="tk"><a class="tklink" href="https://tossinvest.com/stocks/091230" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()" title="토스증권에서 보기">TIGER 반도체</a><span class="nm num">091230</span></div>
       <div class="sectwrap"><span class="sect">업종·테마</span></div>
       <div class="momwrap mom num">3.05<small>모멘텀</small></div>
       <div class="phasewrap"><span class="phase p1">P1 베이스</span></div>
@@ -911,16 +886,14 @@ footer b{color:var(--ink2)}
     <div class="dtitle" style="margin-top:16px">채점 근거</div>
     <ul class="why"><li>⚠ 50일선 이탈: -4.8%</li><li>⚠ 이평선 횡보 또는 하락</li><li>🟢 순자산 1.3조원 (대형 · 청산 위험 낮음)</li><li>🟢 거래대금 20일 평균 209억/일 (호가 두터움)</li><li>⚠ NAV 괴리율 -0.57% (저평가 거래)</li><li>⚠ 하락일 거래량 우위 (비율 0.71 — 분산 매도)</li><li>✓ 강한 상대강도: 0.157 (KOSPI 대비 초과수익)</li><li>🟢 양호한 손익비: 3.1:1</li><li>진입 구간 이탈: 50일선 -4.8%</li></ul>
     <div class="block">⏸ 매수 보류 — Phase 1 (미너비니는 Phase 2만 매수)</div>
-    <p style="margin-top:11px;font-size:12px">
-      <a href="https://finance.naver.com/item/main.naver?code=091230" target="_blank" rel="noopener noreferrer"
-         style="color:var(--info);text-decoration:none">네이버 금융에서 보기 →</a></p>
+    <div class="links"><a href="https://tossinvest.com/stocks/091230" target="_blank" rel="noopener noreferrer">토스증권에서 보기 →</a><a href="https://finance.naver.com/item/main.naver?code=091230" target="_blank" rel="noopener noreferrer">네이버 금융에서 보기 →</a></div>
   </div>
 </details>
 <details class="row">
   <summary>
     <div class="cols">
       <div class="rank num">19</div>
-      <div class="tk">KODEX AI반도체핵심장비<span class="nm num">471990</span></div>
+      <div class="tk"><a class="tklink" href="https://tossinvest.com/stocks/471990" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()" title="토스증권에서 보기">KODEX AI반도체핵심장비</a><span class="nm num">471990</span></div>
       <div class="sectwrap"><span class="sect">업종·테마</span></div>
       <div class="momwrap mom num">3.04<small>모멘텀</small></div>
       <div class="phasewrap"><span class="phase p1">P1 베이스</span></div>
@@ -947,16 +920,14 @@ footer b{color:var(--ink2)}
     <div class="dtitle" style="margin-top:16px">채점 근거</div>
     <ul class="why"><li>양호한 상승추세: 50일선 +5.6%</li><li>⚠ 이평선 횡보 또는 하락</li><li>🟢 순자산 3,989억원</li><li>🟢 거래대금 20일 평균 261억/일 (호가 두터움)</li><li>🟡 NAV 괴리율 -0.20%</li><li>⚠ 하락일 거래량 우위 (비율 0.85 — 분산 매도)</li><li>✓ 강한 상대강도: 0.360 (KOSPI 대비 초과수익)</li><li>🔴 부족한 손익비: 1.8:1 (최소 2:1 필요)</li><li>양호한 진입 구간: 50일선 5.6%</li></ul>
     <div class="block">⏸ 매수 보류 — Phase 1 (미너비니는 Phase 2만 매수)</div>
-    <p style="margin-top:11px;font-size:12px">
-      <a href="https://finance.naver.com/item/main.naver?code=471990" target="_blank" rel="noopener noreferrer"
-         style="color:var(--info);text-decoration:none">네이버 금융에서 보기 →</a></p>
+    <div class="links"><a href="https://tossinvest.com/stocks/471990" target="_blank" rel="noopener noreferrer">토스증권에서 보기 →</a><a href="https://finance.naver.com/item/main.naver?code=471990" target="_blank" rel="noopener noreferrer">네이버 금융에서 보기 →</a></div>
   </div>
 </details>
 <details class="row">
   <summary>
     <div class="cols">
       <div class="rank num">20</div>
-      <div class="tk">TIGER 코리아테크액티브<span class="nm num">471780</span></div>
+      <div class="tk"><a class="tklink" href="https://tossinvest.com/stocks/471780" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()" title="토스증권에서 보기">TIGER 코리아테크액티브</a><span class="nm num">471780</span></div>
       <div class="sectwrap"><span class="sect">업종·테마</span></div>
       <div class="momwrap mom num">2.99<small>모멘텀</small></div>
       <div class="phasewrap"><span class="phase p1">P1 베이스</span></div>
@@ -983,9 +954,7 @@ footer b{color:var(--ink2)}
     <div class="dtitle" style="margin-top:16px">채점 근거</div>
     <ul class="why"><li>⚠ 50일선 이탈: -4.8%</li><li>⚠ 이평선 횡보 또는 하락</li><li>🟢 순자산 2,671억원</li><li>🟢 거래대금 20일 평균 32.0억/일</li><li>⚠ NAV 괴리율 -0.57% (저평가 거래)</li><li>상승일 거래량 소폭 우위 (비율 1.19)</li><li>✓ 강한 상대강도: 0.109 (KOSPI 대비 초과수익)</li><li>🟢 양호한 손익비: 3.1:1</li><li>진입 구간 이탈: 50일선 -4.8%</li></ul>
     <div class="block">⏸ 매수 보류 — Phase 1 (미너비니는 Phase 2만 매수)</div>
-    <p style="margin-top:11px;font-size:12px">
-      <a href="https://finance.naver.com/item/main.naver?code=471780" target="_blank" rel="noopener noreferrer"
-         style="color:var(--info);text-decoration:none">네이버 금융에서 보기 →</a></p>
+    <div class="links"><a href="https://tossinvest.com/stocks/471780" target="_blank" rel="noopener noreferrer">토스증권에서 보기 →</a><a href="https://finance.naver.com/item/main.naver?code=471780" target="_blank" rel="noopener noreferrer">네이버 금융에서 보기 →</a></div>
   </div>
 </details>
   </section>
@@ -1004,7 +973,7 @@ footer b{color:var(--ink2)}
        순자산 규모 15 · 유동성 15 · NAV 괴리율 10으로 옮겼습니다. 나머지 85점은 원본과 동일합니다.</p>
     <p><b>매수 적격</b> — Phase 2 · 트렌드 템플릿 7/8 이상 · SEPA 60점 이상을 모두 만족한 경우에만 표시됩니다.
        모멘텀 상위라도 대부분은 여기서 걸러집니다.</p>
-    <p style="margin-top:12px">갱신 2026-09-05 13:27 · 데이터 네이버 금융(종목·순자산·NAV) / yfinance(시세)</p>
+    <p style="margin-top:12px">갱신 2026-09-05 13:42 · 데이터 네이버 금융(종목·순자산·NAV) / yfinance(시세)</p>
     <p style="color:#4a5568">본 페이지는 정보 제공 목적이며 투자 자문이 아닙니다. 과거 성과는 미래 수익을 보장하지 않습니다.</p>
   </div>
 </footer>

@@ -190,6 +190,7 @@ def run(top_n: int, exclude_leverage: bool = True) -> dict:
         "buy_threshold": config.SEPA_BUY_THRESHOLD,
         "max_score": config.SEPA_MAX_SCORE,
         "benchmark_label": config.BENCHMARK_LABEL,
+        "link_provider": config.LINK_PROVIDER,
         "universe": {
             **uni_stats,
             "excluded_leverage_inverse": uni_stats.get("leverage_inverse", 0),
