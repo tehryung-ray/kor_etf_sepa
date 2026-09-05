@@ -1,0 +1,115 @@
+name: Daily KRX ETF Momentum x SEPA Scan
+
+on:
+  schedule:
+    # 08:00 UTC = 17:00 KST (당일). 한국 증시 정규장 마감(15:30 KST = 06:30 UTC)
+    # 1시간 30분 뒤라 당일 종가가 확정된 상태로 돌아간다.
+    # KST는 서머타임이 없어 수신 시각이 연중 17시로 고정된다.
+    # 월~금 UTC 08:00 = 월~금 KST 17:00 (날짜가 넘어가지 않는다).
+    - cron: '0 8 * * 1-5'
+
+  workflow_dispatch:
+    inputs:
+      top_n:
+        description: 'SEPA 분석 대상 상위 종목 수 (1~100)'
+        required: false
+        type: string
+        default: '20'
+
+# 기본은 무권한. 필요한 잡에서만 명시적으로 올린다.
+permissions: {}
+
+# 동시 실행 방지 — 두 런이 같은 브랜치에 push 하며 충돌하는 것을 막는다.
+concurrency:
+  group: daily-scan-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  scan-and-publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+
+    permissions:
+      contents: write   # docs/ + data/ 커밋·푸시에만 사용
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Get current date
+        id: date
+        run: echo "date=$(date +'%Y-%m-%d')" >> "$GITHUB_OUTPUT"
+
+      # workflow_dispatch 입력은 신뢰하지 않는다.
+      # env 변수로 받아(셸 인젝션 차단) 숫자·범위를 검증한 뒤에만 사용한다.
+      - name: Validate input
+        id: cfg
+        env:
+          RAW_TOP_N: ${{ github.event.inputs.top_n || '20' }}
+        run: |
+          if ! printf '%s' "$RAW_TOP_N" | grep -Eq '^[0-9]+$'; then
+            echo "::error::top_n 은 숫자여야 합니다: $RAW_TOP_N"
+            exit 1
+          fi
+          if [ "$RAW_TOP_N" -lt 1 ] || [ "$RAW_TOP_N" -gt 100 ]; then
+            echo "::error::top_n 은 1~100 범위여야 합니다: $RAW_TOP_N"
+            exit 1
+          fi
+          echo "top_n=$RAW_TOP_N" >> "$GITHUB_OUTPUT"
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run momentum x SEPA scan
+        env:
+          TOP_N: ${{ steps.cfg.outputs.top_n }}
+        run: |
+          echo "=== KRX ETF Momentum x SEPA Scan (top $TOP_N) ==="
+          mkdir -p data/daily docs
+          python run_daily.py --top "$TOP_N"
+
+      # 생성물만 정확히 스테이징한다. `git add -A`를 쓰지 않는 이유는
+      # 실행 중 만들어진 캐시·임시파일이 딸려 올라가는 것을 막기 위해서다.
+      # data/etf_universe.json 은 네이버 장애 시 폴백으로 쓰는 유니버스
+      # 스냅샷이라 함께 커밋한다.
+      #
+      # 커밋 메시지에는 러너 날짜가 아니라 데이터 기준일(scan_date)을 쓴다.
+      # 둘은 다를 수 있다 — 한국 휴장일에 돌면 직전 거래일 종가가 잡힌다.
+      - name: Commit and push results
+        run: |
+          SCAN_DATE=$(python -c "import json; print(json.load(open('data/daily/latest.json', encoding='utf-8'))['scan_date'])")
+          echo "데이터 기준일: $SCAN_DATE"
+
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+
+          git add docs/index.html data/daily/ data/etf_universe.json
+
+          if git diff --staged --quiet; then
+            echo "변경 없음 — 커밋 생략"
+            exit 0
+          fi
+
+          git commit -m "scan: KRX ETF momentum x SEPA - $SCAN_DATE"
+          git push origin "HEAD:${GITHUB_REF_NAME}"
+
+      - name: Upload artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: scan-${{ steps.date.outputs.date }}-run${{ github.run_number }}
+          path: |
+            data/daily/latest.json
+            docs/index.html
+          if-no-files-found: warn
+          retention-days: 90
