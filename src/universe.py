@@ -45,6 +45,11 @@ TAB_KR = {
 #   '레버리지', '인버스' — KRX 상품명 표기 규칙상 반드시 포함된다
 #   숫자+X (2X, 3X, ２Ｘ) — 배수형 상품. 'KODEX', 'INDXX' 같은 단어의 X가
 #   걸리지 않도록 앞자리가 숫자이고 그 앞이 영숫자가 아닐 때만 매치한다.
+# 유효한 종목코드 형식. 숫자 6자리가 기본이고, 2024년 이후 신규 상장분은
+# '0008T0' 같은 영숫자 6자리를 쓴다. 네이버 응답은 외부 입력이므로 이 형식을
+# 벗어난 값은 버린다 — 코드가 그대로 yfinance 요청 URL에 들어가기 때문이다.
+CODE_RE = re.compile(r"^[0-9A-Z]{6}$")
+
 LEVERAGE_INVERSE_RE = re.compile(
     r"레버리지|인버스|곱버스"
     r"|(?<![A-Za-z0-9])[2-9](?:\.\d)?\s?[XxＸ](?![A-Za-z])"
@@ -112,7 +117,13 @@ def get_etf_list(cache_path: str = None,
         "amonut": "turnover_mkrw",  # 당일 거래대금 (백만원) — 원문 오타 그대로
         "quant": "volume",
     })
-    df["code"] = df["code"].astype(str).str.zfill(6)
+    df["code"] = df["code"].astype(str).str.strip().str.upper().str.zfill(6)
+
+    bad = ~df["code"].str.match(CODE_RE)
+    if bad.any():
+        log.warning("종목코드 형식 이상으로 제외: %d종목 %s",
+                    int(bad.sum()), df.loc[bad, "code"].tolist()[:5])
+        df = df[~bad]
     df["category"] = df["etfTabCode"].map(TAB_KR).fillna("기타")
     df["turnover_eok"] = df["turnover_mkrw"] / 100.0   # 백만원 → 억원
 
