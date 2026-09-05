@@ -150,13 +150,27 @@ h1{font-size:clamp(21px,4.4vw,29px);font-weight:800;letter-spacing:-.02em;text-w
 .crit.no span{color:var(--ink3)}
 
 .plan{
-  display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:14px 0 12px;
+  display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:0 0 8px;
   padding:11px;background:var(--panel);border:1px solid var(--line);border-radius:9px
 }
 .plan div{text-align:center}
 .plan .pl{font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--ink3)}
 .plan .pv{font-size:15px;font-weight:800;margin-top:2px}
 .pv.stop{color:var(--bad)} .pv.mid{color:var(--warn)} .pv.tgt{color:var(--good)}
+.plan .pa{font-size:10.5px;color:var(--ink3);margin-top:4px;line-height:1.4;word-break:keep-all}
+.plan .pa b{color:var(--ink2);font-weight:700}
+.planhead{
+  display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin-top:14px;
+  font-size:11px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--ink3)
+}
+.planhead a{color:var(--info);text-decoration:none;letter-spacing:0;text-transform:none;font-size:11.5px}
+.planhead a:hover{text-decoration:underline}
+.plannote{font-size:11.5px;color:var(--ink3);margin:-4px 0 12px;line-height:1.6;word-break:keep-all}
+.plannote b{color:var(--ink2)}
+sup.gate{
+  font-size:8.5px;font-weight:800;color:var(--accent);letter-spacing:.02em;
+  margin-left:2px;vertical-align:super
+}
 
 .fund{
   display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:0 0 12px;
@@ -282,7 +296,10 @@ footer b{color:var(--ink2)}
 
     <div class="cols colhead">
       <div>#</div><div>ETF</div><div>분류</div><div>모멘텀</div>
-      <div>국면</div><div>템플릿</div><div>SEPA 점수</div><div style="text-align:right">현재가</div>
+      <div>국면 <sup class="gate">관문1</sup></div>
+      <div>템플릿 <sup class="gate">관문2</sup></div>
+      <div>SEPA 점수 <sup class="gate">관문3</sup></div>
+      <div style="text-align:right">현재가</div>
     </div>
 
     
@@ -302,7 +319,7 @@ footer b{color:var(--ink2)}
   </summary>
   <div class="detail">
     <div class="fund"><div><div class="fl">순자산</div><div class="fv num">1,224억</div></div><div><div class="fl">거래대금 20일 평균</div><div class="fv num">378.7억/일</div></div><div><div class="fl">NAV 괴리율</div><div class="fv num">-0.05%</div></div></div>
-    <div class="plan"><div><div class="pl">현재가</div><div class="pv num">18,545원</div></div><div><div class="pl">손절가</div><div class="pv stop num">17,989원</div></div><div><div class="pl">1차 익절</div><div class="pv mid num">21,327원</div></div><div><div class="pl">최종 익절</div><div class="pv tgt num">24,108원</div></div></div>
+    <div class="planhead"><span>매매 계획</span><a href="./guide.html#sell">쓰는 법 →</a></div><div class="plan"><div><div class="pl">현재가</div><div class="pv num">18,545원</div><div class="pa">여기서 매수</div></div><div><div class="pl">손절가</div><div class="pv stop num">17,989원</div><div class="pa">닿으면 <b>전량 매도</b></div></div><div><div class="pl">1차 익절</div><div class="pv mid num">21,327원</div><div class="pa"><b>절반 매도</b><br>손절가를 매수가로</div></div><div><div class="pl">최종 익절</div><div class="pv tgt num">24,108원</div><div class="pa">나머지 <b>전량 매도</b></div></div></div><div class="plannote">이 네 숫자는 <b>오늘 사는 사람 기준</b>으로 매일 새로 계산됩니다. 매수했다면 그날 값을 따로 적어두고 그 숫자로 관리하세요.</div>
     <div class="dgrid">
       <div>
         <div class="dtitle">SEPA 점수 구성</div>
@@ -336,7 +353,7 @@ footer b{color:var(--ink2)}
   </summary>
   <div class="detail">
     <div class="fund"><div><div class="fl">순자산</div><div class="fv num">1,722억</div></div><div><div class="fl">거래대금 20일 평균</div><div class="fv num">11.3억/일</div></div><div><div class="fl">NAV 괴리율</div><div class="fv num">-0.62%</div></div></div>
-    <div class="plan"><div><div class="pl">현재가</div><div class="pv num">49,900원</div></div><div><div class="pl">손절가</div><div class="pv stop num">44,910원</div></div><div><div class="pl">1차 익절</div><div class="pv mid num">56,710원</div></div><div><div class="pl">최종 익절</div><div class="pv tgt num">63,520원</div></div></div>
+    <div class="planhead"><span>매매 계획</span><a href="./guide.html#sell">쓰는 법 →</a></div><div class="plan"><div><div class="pl">현재가</div><div class="pv num">49,900원</div><div class="pa">여기서 매수</div></div><div><div class="pl">손절가</div><div class="pv stop num">44,910원</div><div class="pa">닿으면 <b>전량 매도</b></div></div><div><div class="pl">1차 익절</div><div class="pv mid num">56,710원</div><div class="pa"><b>절반 매도</b><br>손절가를 매수가로</div></div><div><div class="pl">최종 익절</div><div class="pv tgt num">63,520원</div><div class="pa">나머지 <b>전량 매도</b></div></div></div><div class="plannote">이 네 숫자는 <b>오늘 사는 사람 기준</b>으로 매일 새로 계산됩니다. 매수했다면 그날 값을 따로 적어두고 그 숫자로 관리하세요.</div>
     <div class="dgrid">
       <div>
         <div class="dtitle">SEPA 점수 구성</div>
@@ -370,7 +387,7 @@ footer b{color:var(--ink2)}
   </summary>
   <div class="detail">
     <div class="fund"><div><div class="fl">순자산</div><div class="fv num">3.5조</div></div><div><div class="fl">거래대금 20일 평균</div><div class="fv num">620.4억/일</div></div><div><div class="fl">NAV 괴리율</div><div class="fv num">-0.16%</div></div></div>
-    <div class="plan"><div><div class="pl">현재가</div><div class="pv num">54,765원</div></div><div><div class="pl">손절가</div><div class="pv stop num">49,288원</div></div><div><div class="pl">1차 익절</div><div class="pv mid num">64,152원</div></div><div><div class="pl">최종 익절</div><div class="pv tgt num">73,539원</div></div></div>
+    <div class="planhead"><span>매매 계획</span><a href="./guide.html#sell">쓰는 법 →</a></div><div class="plan"><div><div class="pl">현재가</div><div class="pv num">54,765원</div><div class="pa">여기서 매수</div></div><div><div class="pl">손절가</div><div class="pv stop num">49,288원</div><div class="pa">닿으면 <b>전량 매도</b></div></div><div><div class="pl">1차 익절</div><div class="pv mid num">64,152원</div><div class="pa"><b>절반 매도</b><br>손절가를 매수가로</div></div><div><div class="pl">최종 익절</div><div class="pv tgt num">73,539원</div><div class="pa">나머지 <b>전량 매도</b></div></div></div><div class="plannote">이 네 숫자는 <b>오늘 사는 사람 기준</b>으로 매일 새로 계산됩니다. 매수했다면 그날 값을 따로 적어두고 그 숫자로 관리하세요.</div>
     <div class="dgrid">
       <div>
         <div class="dtitle">SEPA 점수 구성</div>
@@ -404,7 +421,7 @@ footer b{color:var(--ink2)}
   </summary>
   <div class="detail">
     <div class="fund"><div><div class="fl">순자산</div><div class="fv num">6,634억</div></div><div><div class="fl">거래대금 20일 평균</div><div class="fv num">121.2억/일</div></div><div><div class="fl">NAV 괴리율</div><div class="fv num">-0.28%</div></div></div>
-    <div class="plan"><div><div class="pl">현재가</div><div class="pv num">56,705원</div></div><div><div class="pl">손절가</div><div class="pv stop num">51,034원</div></div><div><div class="pl">1차 익절</div><div class="pv mid num">65,866원</div></div><div><div class="pl">최종 익절</div><div class="pv tgt num">75,027원</div></div></div>
+    <div class="planhead"><span>매매 계획</span><a href="./guide.html#sell">쓰는 법 →</a></div><div class="plan"><div><div class="pl">현재가</div><div class="pv num">56,705원</div><div class="pa">여기서 매수</div></div><div><div class="pl">손절가</div><div class="pv stop num">51,034원</div><div class="pa">닿으면 <b>전량 매도</b></div></div><div><div class="pl">1차 익절</div><div class="pv mid num">65,866원</div><div class="pa"><b>절반 매도</b><br>손절가를 매수가로</div></div><div><div class="pl">최종 익절</div><div class="pv tgt num">75,027원</div><div class="pa">나머지 <b>전량 매도</b></div></div></div><div class="plannote">이 네 숫자는 <b>오늘 사는 사람 기준</b>으로 매일 새로 계산됩니다. 매수했다면 그날 값을 따로 적어두고 그 숫자로 관리하세요.</div>
     <div class="dgrid">
       <div>
         <div class="dtitle">SEPA 점수 구성</div>
@@ -438,7 +455,7 @@ footer b{color:var(--ink2)}
   </summary>
   <div class="detail">
     <div class="fund"><div><div class="fl">순자산</div><div class="fv num">514억</div></div><div><div class="fl">거래대금 20일 평균</div><div class="fv num">24.5억/일</div></div><div><div class="fl">NAV 괴리율</div><div class="fv num">-0.12%</div></div></div>
-    <div class="plan"><div><div class="pl">현재가</div><div class="pv num">25,695원</div></div><div><div class="pl">손절가</div><div class="pv stop num">23,126원</div></div><div><div class="pl">1차 익절</div><div class="pv mid num">29,549원</div></div><div><div class="pl">최종 익절</div><div class="pv tgt num">33,404원</div></div></div>
+    <div class="planhead"><span>매매 계획</span><a href="./guide.html#sell">쓰는 법 →</a></div><div class="plan"><div><div class="pl">현재가</div><div class="pv num">25,695원</div><div class="pa">여기서 매수</div></div><div><div class="pl">손절가</div><div class="pv stop num">23,126원</div><div class="pa">닿으면 <b>전량 매도</b></div></div><div><div class="pl">1차 익절</div><div class="pv mid num">29,549원</div><div class="pa"><b>절반 매도</b><br>손절가를 매수가로</div></div><div><div class="pl">최종 익절</div><div class="pv tgt num">33,404원</div><div class="pa">나머지 <b>전량 매도</b></div></div></div><div class="plannote">이 네 숫자는 <b>오늘 사는 사람 기준</b>으로 매일 새로 계산됩니다. 매수했다면 그날 값을 따로 적어두고 그 숫자로 관리하세요.</div>
     <div class="dgrid">
       <div>
         <div class="dtitle">SEPA 점수 구성</div>
@@ -472,7 +489,7 @@ footer b{color:var(--ink2)}
   </summary>
   <div class="detail">
     <div class="fund"><div><div class="fl">순자산</div><div class="fv num">2,327억</div></div><div><div class="fl">거래대금 20일 평균</div><div class="fv num">52.1억/일</div></div><div><div class="fl">NAV 괴리율</div><div class="fv num">-0.30%</div></div></div>
-    <div class="plan"><div><div class="pl">현재가</div><div class="pv num">54,125원</div></div><div><div class="pl">손절가</div><div class="pv stop num">48,712원</div></div><div><div class="pl">1차 익절</div><div class="pv mid num">62,681원</div></div><div><div class="pl">최종 익절</div><div class="pv tgt num">71,238원</div></div></div>
+    <div class="planhead"><span>매매 계획</span><a href="./guide.html#sell">쓰는 법 →</a></div><div class="plan"><div><div class="pl">현재가</div><div class="pv num">54,125원</div><div class="pa">여기서 매수</div></div><div><div class="pl">손절가</div><div class="pv stop num">48,712원</div><div class="pa">닿으면 <b>전량 매도</b></div></div><div><div class="pl">1차 익절</div><div class="pv mid num">62,681원</div><div class="pa"><b>절반 매도</b><br>손절가를 매수가로</div></div><div><div class="pl">최종 익절</div><div class="pv tgt num">71,238원</div><div class="pa">나머지 <b>전량 매도</b></div></div></div><div class="plannote">이 네 숫자는 <b>오늘 사는 사람 기준</b>으로 매일 새로 계산됩니다. 매수했다면 그날 값을 따로 적어두고 그 숫자로 관리하세요.</div>
     <div class="dgrid">
       <div>
         <div class="dtitle">SEPA 점수 구성</div>
@@ -506,7 +523,7 @@ footer b{color:var(--ink2)}
   </summary>
   <div class="detail">
     <div class="fund"><div><div class="fl">순자산</div><div class="fv num">1.7조</div></div><div><div class="fl">거래대금 20일 평균</div><div class="fv num">568.5억/일</div></div><div><div class="fl">NAV 괴리율</div><div class="fv num">+0.52%</div></div></div>
-    <div class="plan"><div><div class="pl">현재가</div><div class="pv num">96,985원</div></div><div><div class="pl">손절가</div><div class="pv stop num">87,286원</div></div><div><div class="pl">1차 익절</div><div class="pv mid num">115,456원</div></div><div><div class="pl">최종 익절</div><div class="pv tgt num">133,927원</div></div></div>
+    <div class="planhead"><span>매매 계획</span><a href="./guide.html#sell">쓰는 법 →</a></div><div class="plan"><div><div class="pl">현재가</div><div class="pv num">96,985원</div><div class="pa">여기서 매수</div></div><div><div class="pl">손절가</div><div class="pv stop num">87,286원</div><div class="pa">닿으면 <b>전량 매도</b></div></div><div><div class="pl">1차 익절</div><div class="pv mid num">115,456원</div><div class="pa"><b>절반 매도</b><br>손절가를 매수가로</div></div><div><div class="pl">최종 익절</div><div class="pv tgt num">133,927원</div><div class="pa">나머지 <b>전량 매도</b></div></div></div><div class="plannote">이 네 숫자는 <b>오늘 사는 사람 기준</b>으로 매일 새로 계산됩니다. 매수했다면 그날 값을 따로 적어두고 그 숫자로 관리하세요.</div>
     <div class="dgrid">
       <div>
         <div class="dtitle">SEPA 점수 구성</div>
@@ -540,7 +557,7 @@ footer b{color:var(--ink2)}
   </summary>
   <div class="detail">
     <div class="fund"><div><div class="fl">순자산</div><div class="fv num">2,820억</div></div><div><div class="fl">거래대금 20일 평균</div><div class="fv num">424.1억/일</div></div><div><div class="fl">NAV 괴리율</div><div class="fv num">-0.48%</div></div></div>
-    <div class="plan"><div><div class="pl">현재가</div><div class="pv num">4,520원</div></div><div><div class="pl">손절가</div><div class="pv stop num">4,384원</div></div><div><div class="pl">1차 익절</div><div class="pv mid num">5,198원</div></div><div><div class="pl">최종 익절</div><div class="pv tgt num">5,876원</div></div></div>
+    <div class="planhead"><span>매매 계획</span><a href="./guide.html#sell">쓰는 법 →</a></div><div class="plan"><div><div class="pl">현재가</div><div class="pv num">4,520원</div><div class="pa">여기서 매수</div></div><div><div class="pl">손절가</div><div class="pv stop num">4,384원</div><div class="pa">닿으면 <b>전량 매도</b></div></div><div><div class="pl">1차 익절</div><div class="pv mid num">5,198원</div><div class="pa"><b>절반 매도</b><br>손절가를 매수가로</div></div><div><div class="pl">최종 익절</div><div class="pv tgt num">5,876원</div><div class="pa">나머지 <b>전량 매도</b></div></div></div><div class="plannote">이 네 숫자는 <b>오늘 사는 사람 기준</b>으로 매일 새로 계산됩니다. 매수했다면 그날 값을 따로 적어두고 그 숫자로 관리하세요.</div>
     <div class="dgrid">
       <div>
         <div class="dtitle">SEPA 점수 구성</div>
@@ -574,7 +591,7 @@ footer b{color:var(--ink2)}
   </summary>
   <div class="detail">
     <div class="fund"><div><div class="fl">순자산</div><div class="fv num">2.6조</div></div><div><div class="fl">거래대금 20일 평균</div><div class="fv num">546.8억/일</div></div><div><div class="fl">NAV 괴리율</div><div class="fv num">-0.26%</div></div></div>
-    <div class="plan"><div><div class="pl">현재가</div><div class="pv num">133,665원</div></div><div><div class="pl">손절가</div><div class="pv stop num">120,298원</div></div><div><div class="pl">1차 익절</div><div class="pv mid num">155,424원</div></div><div><div class="pl">최종 익절</div><div class="pv tgt num">177,184원</div></div></div>
+    <div class="planhead"><span>매매 계획</span><a href="./guide.html#sell">쓰는 법 →</a></div><div class="plan"><div><div class="pl">현재가</div><div class="pv num">133,665원</div><div class="pa">여기서 매수</div></div><div><div class="pl">손절가</div><div class="pv stop num">120,298원</div><div class="pa">닿으면 <b>전량 매도</b></div></div><div><div class="pl">1차 익절</div><div class="pv mid num">155,424원</div><div class="pa"><b>절반 매도</b><br>손절가를 매수가로</div></div><div><div class="pl">최종 익절</div><div class="pv tgt num">177,184원</div><div class="pa">나머지 <b>전량 매도</b></div></div></div><div class="plannote">이 네 숫자는 <b>오늘 사는 사람 기준</b>으로 매일 새로 계산됩니다. 매수했다면 그날 값을 따로 적어두고 그 숫자로 관리하세요.</div>
     <div class="dgrid">
       <div>
         <div class="dtitle">SEPA 점수 구성</div>
@@ -608,7 +625,7 @@ footer b{color:var(--ink2)}
   </summary>
   <div class="detail">
     <div class="fund"><div><div class="fl">순자산</div><div class="fv num">1,606억</div></div><div><div class="fl">거래대금 20일 평균</div><div class="fv num">46.2억/일</div></div><div><div class="fl">NAV 괴리율</div><div class="fv num">-0.34%</div></div></div>
-    <div class="plan"><div><div class="pl">현재가</div><div class="pv num">45,885원</div></div><div><div class="pl">손절가</div><div class="pv stop num">41,296원</div></div><div><div class="pl">1차 익절</div><div class="pv mid num">53,122원</div></div><div><div class="pl">최종 익절</div><div class="pv tgt num">60,360원</div></div></div>
+    <div class="planhead"><span>매매 계획</span><a href="./guide.html#sell">쓰는 법 →</a></div><div class="plan"><div><div class="pl">현재가</div><div class="pv num">45,885원</div><div class="pa">여기서 매수</div></div><div><div class="pl">손절가</div><div class="pv stop num">41,296원</div><div class="pa">닿으면 <b>전량 매도</b></div></div><div><div class="pl">1차 익절</div><div class="pv mid num">53,122원</div><div class="pa"><b>절반 매도</b><br>손절가를 매수가로</div></div><div><div class="pl">최종 익절</div><div class="pv tgt num">60,360원</div><div class="pa">나머지 <b>전량 매도</b></div></div></div><div class="plannote">이 네 숫자는 <b>오늘 사는 사람 기준</b>으로 매일 새로 계산됩니다. 매수했다면 그날 값을 따로 적어두고 그 숫자로 관리하세요.</div>
     <div class="dgrid">
       <div>
         <div class="dtitle">SEPA 점수 구성</div>
@@ -642,7 +659,7 @@ footer b{color:var(--ink2)}
   </summary>
   <div class="detail">
     <div class="fund"><div><div class="fl">순자산</div><div class="fv num">595억</div></div><div><div class="fl">거래대금 20일 평균</div><div class="fv num">42.7억/일</div></div><div><div class="fl">NAV 괴리율</div><div class="fv num">-0.34%</div></div></div>
-    <div class="plan"><div><div class="pl">현재가</div><div class="pv num">21,265원</div></div><div><div class="pl">손절가</div><div class="pv stop num">19,995원</div></div><div><div class="pl">1차 익절</div><div class="pv mid num">24,455원</div></div><div><div class="pl">최종 익절</div><div class="pv tgt num">27,644원</div></div></div>
+    <div class="planhead"><span>매매 계획</span><a href="./guide.html#sell">쓰는 법 →</a></div><div class="plan"><div><div class="pl">현재가</div><div class="pv num">21,265원</div><div class="pa">여기서 매수</div></div><div><div class="pl">손절가</div><div class="pv stop num">19,995원</div><div class="pa">닿으면 <b>전량 매도</b></div></div><div><div class="pl">1차 익절</div><div class="pv mid num">24,455원</div><div class="pa"><b>절반 매도</b><br>손절가를 매수가로</div></div><div><div class="pl">최종 익절</div><div class="pv tgt num">27,644원</div><div class="pa">나머지 <b>전량 매도</b></div></div></div><div class="plannote">이 네 숫자는 <b>오늘 사는 사람 기준</b>으로 매일 새로 계산됩니다. 매수했다면 그날 값을 따로 적어두고 그 숫자로 관리하세요.</div>
     <div class="dgrid">
       <div>
         <div class="dtitle">SEPA 점수 구성</div>
@@ -676,7 +693,7 @@ footer b{color:var(--ink2)}
   </summary>
   <div class="detail">
     <div class="fund"><div><div class="fl">순자산</div><div class="fv num">3,345억</div></div><div><div class="fl">거래대금 20일 평균</div><div class="fv num">24.0억/일</div></div><div><div class="fl">NAV 괴리율</div><div class="fv num">-0.66%</div></div></div>
-    <div class="plan"><div><div class="pl">현재가</div><div class="pv num">42,345원</div></div><div><div class="pl">손절가</div><div class="pv stop num">38,110원</div></div><div><div class="pl">1차 익절</div><div class="pv mid num">49,298원</div></div><div><div class="pl">최종 익절</div><div class="pv tgt num">56,250원</div></div></div>
+    <div class="planhead"><span>매매 계획</span><a href="./guide.html#sell">쓰는 법 →</a></div><div class="plan"><div><div class="pl">현재가</div><div class="pv num">42,345원</div><div class="pa">여기서 매수</div></div><div><div class="pl">손절가</div><div class="pv stop num">38,110원</div><div class="pa">닿으면 <b>전량 매도</b></div></div><div><div class="pl">1차 익절</div><div class="pv mid num">49,298원</div><div class="pa"><b>절반 매도</b><br>손절가를 매수가로</div></div><div><div class="pl">최종 익절</div><div class="pv tgt num">56,250원</div><div class="pa">나머지 <b>전량 매도</b></div></div></div><div class="plannote">이 네 숫자는 <b>오늘 사는 사람 기준</b>으로 매일 새로 계산됩니다. 매수했다면 그날 값을 따로 적어두고 그 숫자로 관리하세요.</div>
     <div class="dgrid">
       <div>
         <div class="dtitle">SEPA 점수 구성</div>
@@ -710,7 +727,7 @@ footer b{color:var(--ink2)}
   </summary>
   <div class="detail">
     <div class="fund"><div><div class="fl">순자산</div><div class="fv num">1,058억</div></div><div><div class="fl">거래대금 20일 평균</div><div class="fv num">33.2억/일</div></div><div><div class="fl">NAV 괴리율</div><div class="fv num">-0.18%</div></div></div>
-    <div class="plan"><div><div class="pl">현재가</div><div class="pv num">66,125원</div></div><div><div class="pl">손절가</div><div class="pv stop num">59,512원</div></div><div><div class="pl">1차 익절</div><div class="pv mid num">76,072원</div></div><div><div class="pl">최종 익절</div><div class="pv tgt num">86,020원</div></div></div>
+    <div class="planhead"><span>매매 계획</span><a href="./guide.html#sell">쓰는 법 →</a></div><div class="plan"><div><div class="pl">현재가</div><div class="pv num">66,125원</div><div class="pa">여기서 매수</div></div><div><div class="pl">손절가</div><div class="pv stop num">59,512원</div><div class="pa">닿으면 <b>전량 매도</b></div></div><div><div class="pl">1차 익절</div><div class="pv mid num">76,072원</div><div class="pa"><b>절반 매도</b><br>손절가를 매수가로</div></div><div><div class="pl">최종 익절</div><div class="pv tgt num">86,020원</div><div class="pa">나머지 <b>전량 매도</b></div></div></div><div class="plannote">이 네 숫자는 <b>오늘 사는 사람 기준</b>으로 매일 새로 계산됩니다. 매수했다면 그날 값을 따로 적어두고 그 숫자로 관리하세요.</div>
     <div class="dgrid">
       <div>
         <div class="dtitle">SEPA 점수 구성</div>
@@ -744,7 +761,7 @@ footer b{color:var(--ink2)}
   </summary>
   <div class="detail">
     <div class="fund"><div><div class="fl">순자산</div><div class="fv num">1.1조</div></div><div><div class="fl">거래대금 20일 평균</div><div class="fv num">242.3억/일</div></div><div><div class="fl">NAV 괴리율</div><div class="fv num">-0.25%</div></div></div>
-    <div class="plan"><div><div class="pl">현재가</div><div class="pv num">57,000원</div></div><div><div class="pl">손절가</div><div class="pv stop num">51,300원</div></div><div><div class="pl">1차 익절</div><div class="pv mid num">65,269원</div></div><div><div class="pl">최종 익절</div><div class="pv tgt num">73,538원</div></div></div>
+    <div class="planhead"><span>매매 계획</span><a href="./guide.html#sell">쓰는 법 →</a></div><div class="plan"><div><div class="pl">현재가</div><div class="pv num">57,000원</div><div class="pa">여기서 매수</div></div><div><div class="pl">손절가</div><div class="pv stop num">51,300원</div><div class="pa">닿으면 <b>전량 매도</b></div></div><div><div class="pl">1차 익절</div><div class="pv mid num">65,269원</div><div class="pa"><b>절반 매도</b><br>손절가를 매수가로</div></div><div><div class="pl">최종 익절</div><div class="pv tgt num">73,538원</div><div class="pa">나머지 <b>전량 매도</b></div></div></div><div class="plannote">이 네 숫자는 <b>오늘 사는 사람 기준</b>으로 매일 새로 계산됩니다. 매수했다면 그날 값을 따로 적어두고 그 숫자로 관리하세요.</div>
     <div class="dgrid">
       <div>
         <div class="dtitle">SEPA 점수 구성</div>
@@ -778,7 +795,7 @@ footer b{color:var(--ink2)}
   </summary>
   <div class="detail">
     <div class="fund"><div><div class="fl">순자산</div><div class="fv num">1,790억</div></div><div><div class="fl">거래대금 20일 평균</div><div class="fv num">12.5억/일</div></div><div><div class="fl">NAV 괴리율</div><div class="fv num">-0.06%</div></div></div>
-    <div class="plan"><div><div class="pl">현재가</div><div class="pv num">32,550원</div></div><div><div class="pl">손절가</div><div class="pv stop num">29,295원</div></div><div><div class="pl">1차 익절</div><div class="pv mid num">36,299원</div></div><div><div class="pl">최종 익절</div><div class="pv tgt num">40,047원</div></div></div>
+    <div class="planhead"><span>매매 계획</span><a href="./guide.html#sell">쓰는 법 →</a></div><div class="plan"><div><div class="pl">현재가</div><div class="pv num">32,550원</div><div class="pa">여기서 매수</div></div><div><div class="pl">손절가</div><div class="pv stop num">29,295원</div><div class="pa">닿으면 <b>전량 매도</b></div></div><div><div class="pl">1차 익절</div><div class="pv mid num">36,299원</div><div class="pa"><b>절반 매도</b><br>손절가를 매수가로</div></div><div><div class="pl">최종 익절</div><div class="pv tgt num">40,047원</div><div class="pa">나머지 <b>전량 매도</b></div></div></div><div class="plannote">이 네 숫자는 <b>오늘 사는 사람 기준</b>으로 매일 새로 계산됩니다. 매수했다면 그날 값을 따로 적어두고 그 숫자로 관리하세요.</div>
     <div class="dgrid">
       <div>
         <div class="dtitle">SEPA 점수 구성</div>
@@ -812,7 +829,7 @@ footer b{color:var(--ink2)}
   </summary>
   <div class="detail">
     <div class="fund"><div><div class="fl">순자산</div><div class="fv num">3.9조</div></div><div><div class="fl">거래대금 20일 평균</div><div class="fv num">1,795.0억/일</div></div><div><div class="fl">NAV 괴리율</div><div class="fv num">-0.13%</div></div></div>
-    <div class="plan"><div><div class="pl">현재가</div><div class="pv num">38,540원</div></div><div><div class="pl">손절가</div><div class="pv stop num">34,686원</div></div><div><div class="pl">1차 익절</div><div class="pv mid num">45,264원</div></div><div><div class="pl">최종 익절</div><div class="pv tgt num">51,987원</div></div></div>
+    <div class="planhead"><span>매매 계획</span><a href="./guide.html#sell">쓰는 법 →</a></div><div class="plan"><div><div class="pl">현재가</div><div class="pv num">38,540원</div><div class="pa">여기서 매수</div></div><div><div class="pl">손절가</div><div class="pv stop num">34,686원</div><div class="pa">닿으면 <b>전량 매도</b></div></div><div><div class="pl">1차 익절</div><div class="pv mid num">45,264원</div><div class="pa"><b>절반 매도</b><br>손절가를 매수가로</div></div><div><div class="pl">최종 익절</div><div class="pv tgt num">51,987원</div><div class="pa">나머지 <b>전량 매도</b></div></div></div><div class="plannote">이 네 숫자는 <b>오늘 사는 사람 기준</b>으로 매일 새로 계산됩니다. 매수했다면 그날 값을 따로 적어두고 그 숫자로 관리하세요.</div>
     <div class="dgrid">
       <div>
         <div class="dtitle">SEPA 점수 구성</div>
@@ -846,7 +863,7 @@ footer b{color:var(--ink2)}
   </summary>
   <div class="detail">
     <div class="fund"><div><div class="fl">순자산</div><div class="fv num">2,725억</div></div><div><div class="fl">거래대금 20일 평균</div><div class="fv num">315.6억/일</div></div><div><div class="fl">NAV 괴리율</div><div class="fv num">+0.05%</div></div></div>
-    <div class="plan"><div><div class="pl">현재가</div><div class="pv num">21,370원</div></div><div><div class="pl">손절가</div><div class="pv stop num">19,233원</div></div><div><div class="pl">1차 익절</div><div class="pv mid num">24,232원</div></div><div><div class="pl">최종 익절</div><div class="pv tgt num">27,095원</div></div></div>
+    <div class="planhead"><span>매매 계획</span><a href="./guide.html#sell">쓰는 법 →</a></div><div class="plan"><div><div class="pl">현재가</div><div class="pv num">21,370원</div><div class="pa">여기서 매수</div></div><div><div class="pl">손절가</div><div class="pv stop num">19,233원</div><div class="pa">닿으면 <b>전량 매도</b></div></div><div><div class="pl">1차 익절</div><div class="pv mid num">24,232원</div><div class="pa"><b>절반 매도</b><br>손절가를 매수가로</div></div><div><div class="pl">최종 익절</div><div class="pv tgt num">27,095원</div><div class="pa">나머지 <b>전량 매도</b></div></div></div><div class="plannote">이 네 숫자는 <b>오늘 사는 사람 기준</b>으로 매일 새로 계산됩니다. 매수했다면 그날 값을 따로 적어두고 그 숫자로 관리하세요.</div>
     <div class="dgrid">
       <div>
         <div class="dtitle">SEPA 점수 구성</div>
@@ -880,7 +897,7 @@ footer b{color:var(--ink2)}
   </summary>
   <div class="detail">
     <div class="fund"><div><div class="fl">순자산</div><div class="fv num">1.3조</div></div><div><div class="fl">거래대금 20일 평균</div><div class="fv num">209.4억/일</div></div><div><div class="fl">NAV 괴리율</div><div class="fv num">-0.57%</div></div></div>
-    <div class="plan"><div><div class="pl">현재가</div><div class="pv num">130,295원</div></div><div><div class="pl">손절가</div><div class="pv stop num">117,266원</div></div><div><div class="pl">1차 익절</div><div class="pv mid num">150,674원</div></div><div><div class="pl">최종 익절</div><div class="pv tgt num">171,054원</div></div></div>
+    <div class="planhead"><span>매매 계획</span><a href="./guide.html#sell">쓰는 법 →</a></div><div class="plan"><div><div class="pl">현재가</div><div class="pv num">130,295원</div><div class="pa">여기서 매수</div></div><div><div class="pl">손절가</div><div class="pv stop num">117,266원</div><div class="pa">닿으면 <b>전량 매도</b></div></div><div><div class="pl">1차 익절</div><div class="pv mid num">150,674원</div><div class="pa"><b>절반 매도</b><br>손절가를 매수가로</div></div><div><div class="pl">최종 익절</div><div class="pv tgt num">171,054원</div><div class="pa">나머지 <b>전량 매도</b></div></div></div><div class="plannote">이 네 숫자는 <b>오늘 사는 사람 기준</b>으로 매일 새로 계산됩니다. 매수했다면 그날 값을 따로 적어두고 그 숫자로 관리하세요.</div>
     <div class="dgrid">
       <div>
         <div class="dtitle">SEPA 점수 구성</div>
@@ -914,7 +931,7 @@ footer b{color:var(--ink2)}
   </summary>
   <div class="detail">
     <div class="fund"><div><div class="fl">순자산</div><div class="fv num">3,989억</div></div><div><div class="fl">거래대금 20일 평균</div><div class="fv num">261.2억/일</div></div><div><div class="fl">NAV 괴리율</div><div class="fv num">-0.20%</div></div></div>
-    <div class="plan"><div><div class="pl">현재가</div><div class="pv num">24,250원</div></div><div><div class="pl">손절가</div><div class="pv stop num">21,825원</div></div><div><div class="pl">1차 익절</div><div class="pv mid num">26,474원</div></div><div><div class="pl">최종 익절</div><div class="pv tgt num">28,697원</div></div></div>
+    <div class="planhead"><span>매매 계획</span><a href="./guide.html#sell">쓰는 법 →</a></div><div class="plan"><div><div class="pl">현재가</div><div class="pv num">24,250원</div><div class="pa">여기서 매수</div></div><div><div class="pl">손절가</div><div class="pv stop num">21,825원</div><div class="pa">닿으면 <b>전량 매도</b></div></div><div><div class="pl">1차 익절</div><div class="pv mid num">26,474원</div><div class="pa"><b>절반 매도</b><br>손절가를 매수가로</div></div><div><div class="pl">최종 익절</div><div class="pv tgt num">28,697원</div><div class="pa">나머지 <b>전량 매도</b></div></div></div><div class="plannote">이 네 숫자는 <b>오늘 사는 사람 기준</b>으로 매일 새로 계산됩니다. 매수했다면 그날 값을 따로 적어두고 그 숫자로 관리하세요.</div>
     <div class="dgrid">
       <div>
         <div class="dtitle">SEPA 점수 구성</div>
@@ -948,7 +965,7 @@ footer b{color:var(--ink2)}
   </summary>
   <div class="detail">
     <div class="fund"><div><div class="fl">순자산</div><div class="fv num">2,671억</div></div><div><div class="fl">거래대금 20일 평균</div><div class="fv num">32.0억/일</div></div><div><div class="fl">NAV 괴리율</div><div class="fv num">-0.57%</div></div></div>
-    <div class="plan"><div><div class="pl">현재가</div><div class="pv num">34,465원</div></div><div><div class="pl">손절가</div><div class="pv stop num">31,018원</div></div><div><div class="pl">1차 익절</div><div class="pv mid num">39,851원</div></div><div><div class="pl">최종 익절</div><div class="pv tgt num">45,237원</div></div></div>
+    <div class="planhead"><span>매매 계획</span><a href="./guide.html#sell">쓰는 법 →</a></div><div class="plan"><div><div class="pl">현재가</div><div class="pv num">34,465원</div><div class="pa">여기서 매수</div></div><div><div class="pl">손절가</div><div class="pv stop num">31,018원</div><div class="pa">닿으면 <b>전량 매도</b></div></div><div><div class="pl">1차 익절</div><div class="pv mid num">39,851원</div><div class="pa"><b>절반 매도</b><br>손절가를 매수가로</div></div><div><div class="pl">최종 익절</div><div class="pv tgt num">45,237원</div><div class="pa">나머지 <b>전량 매도</b></div></div></div><div class="plannote">이 네 숫자는 <b>오늘 사는 사람 기준</b>으로 매일 새로 계산됩니다. 매수했다면 그날 값을 따로 적어두고 그 숫자로 관리하세요.</div>
     <div class="dgrid">
       <div>
         <div class="dtitle">SEPA 점수 구성</div>
@@ -982,7 +999,7 @@ footer b{color:var(--ink2)}
        순자산 규모 15 · 유동성 15 · NAV 괴리율 10으로 옮겼습니다. 나머지 85점은 원본과 동일합니다.</p>
     <p><b>매수 적격</b> — Phase 2 · 트렌드 템플릿 7/8 이상 · SEPA 60점 이상을 모두 만족한 경우에만 표시됩니다.
        모멘텀 상위라도 대부분은 여기서 걸러집니다.</p>
-    <p style="margin-top:12px">갱신 2026-09-06 07:34 · 데이터 네이버 금융(종목·순자산·NAV) / yfinance(시세)</p>
+    <p style="margin-top:12px">갱신 2026-09-06 07:44 · 데이터 네이버 금융(종목·순자산·NAV) / yfinance(시세)</p>
     <p style="color:#4a5568">본 페이지는 정보 제공 목적이며 투자 자문이 아닙니다. 과거 성과는 미래 수익을 보장하지 않습니다.</p>
   </div>
 </footer>

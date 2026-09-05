@@ -150,13 +150,27 @@ h1{font-size:clamp(21px,4.4vw,29px);font-weight:800;letter-spacing:-.02em;text-w
 .crit.no span{color:var(--ink3)}
 
 .plan{
-  display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:14px 0 12px;
+  display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:0 0 8px;
   padding:11px;background:var(--panel);border:1px solid var(--line);border-radius:9px
 }
 .plan div{text-align:center}
 .plan .pl{font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--ink3)}
 .plan .pv{font-size:15px;font-weight:800;margin-top:2px}
 .pv.stop{color:var(--bad)} .pv.mid{color:var(--warn)} .pv.tgt{color:var(--good)}
+.plan .pa{font-size:10.5px;color:var(--ink3);margin-top:4px;line-height:1.4;word-break:keep-all}
+.plan .pa b{color:var(--ink2);font-weight:700}
+.planhead{
+  display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin-top:14px;
+  font-size:11px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--ink3)
+}
+.planhead a{color:var(--info);text-decoration:none;letter-spacing:0;text-transform:none;font-size:11.5px}
+.planhead a:hover{text-decoration:underline}
+.plannote{font-size:11.5px;color:var(--ink3);margin:-4px 0 12px;line-height:1.6;word-break:keep-all}
+.plannote b{color:var(--ink2)}
+sup.gate{
+  font-size:8.5px;font-weight:800;color:var(--accent);letter-spacing:.02em;
+  margin-left:2px;vertical-align:super
+}
 
 .fund{
   display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:0 0 12px;

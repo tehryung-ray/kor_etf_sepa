@@ -178,13 +178,27 @@ h1{font-size:clamp(21px,4.4vw,29px);font-weight:800;letter-spacing:-.02em;text-w
 .crit.no span{color:var(--ink3)}
 
 .plan{
-  display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:14px 0 12px;
+  display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:0 0 8px;
   padding:11px;background:var(--panel);border:1px solid var(--line);border-radius:9px
 }
 .plan div{text-align:center}
 .plan .pl{font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--ink3)}
 .plan .pv{font-size:15px;font-weight:800;margin-top:2px}
 .pv.stop{color:var(--bad)} .pv.mid{color:var(--warn)} .pv.tgt{color:var(--good)}
+.plan .pa{font-size:10.5px;color:var(--ink3);margin-top:4px;line-height:1.4;word-break:keep-all}
+.plan .pa b{color:var(--ink2);font-weight:700}
+.planhead{
+  display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin-top:14px;
+  font-size:11px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--ink3)
+}
+.planhead a{color:var(--info);text-decoration:none;letter-spacing:0;text-transform:none;font-size:11.5px}
+.planhead a:hover{text-decoration:underline}
+.plannote{font-size:11.5px;color:var(--ink3);margin:-4px 0 12px;line-height:1.6;word-break:keep-all}
+.plannote b{color:var(--ink2)}
+sup.gate{
+  font-size:8.5px;font-weight:800;color:var(--accent);letter-spacing:.02em;
+  margin-left:2px;vertical-align:super
+}
 
 .fund{
   display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:0 0 12px;
@@ -368,12 +382,20 @@ def _row(r: Dict, threshold: int, max_score: int, provider: str) -> str:
 
     # 매매 계획
     plan = (
+        '<div class="planhead"><span>매매 계획</span>'
+        '<a href="./guide.html#sell">쓰는 법 →</a></div>'
         '<div class="plan">'
-        f'<div><div class="pl">현재가</div><div class="pv num">{_won(r["current_price"])}</div></div>'
-        f'<div><div class="pl">손절가</div><div class="pv stop num">{_won(r["stop_loss"])}</div></div>'
-        f'<div><div class="pl">1차 익절</div><div class="pv mid num">{_won(r.get("mid_target"))}</div></div>'
-        f'<div><div class="pl">최종 익절</div><div class="pv tgt num">{_won(r["target"])}</div></div>'
+        f'<div><div class="pl">현재가</div><div class="pv num">{_won(r["current_price"])}</div>'
+        '<div class="pa">여기서 매수</div></div>'
+        f'<div><div class="pl">손절가</div><div class="pv stop num">{_won(r["stop_loss"])}</div>'
+        '<div class="pa">닿으면 <b>전량 매도</b></div></div>'
+        f'<div><div class="pl">1차 익절</div><div class="pv mid num">{_won(r.get("mid_target"))}</div>'
+        '<div class="pa"><b>절반 매도</b><br>손절가를 매수가로</div></div>'
+        f'<div><div class="pl">최종 익절</div><div class="pv tgt num">{_won(r["target"])}</div>'
+        '<div class="pa">나머지 <b>전량 매도</b></div></div>'
         '</div>'
+        '<div class="plannote">이 네 숫자는 <b>오늘 사는 사람 기준</b>으로 매일 새로 계산됩니다. '
+        '매수했다면 그날 값을 따로 적어두고 그 숫자로 관리하세요.</div>'
     )
 
     if r["is_buy"]:
@@ -553,7 +575,10 @@ def build_html(data: Dict) -> str:
 
     <div class="cols colhead">
       <div>#</div><div>ETF</div><div>분류</div><div>모멘텀</div>
-      <div>국면</div><div>템플릿</div><div>SEPA 점수</div><div style="text-align:right">현재가</div>
+      <div>국면 <sup class="gate">관문1</sup></div>
+      <div>템플릿 <sup class="gate">관문2</sup></div>
+      <div>SEPA 점수 <sup class="gate">관문3</sup></div>
+      <div style="text-align:right">현재가</div>
     </div>
 
     {rows}
