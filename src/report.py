@@ -171,7 +171,8 @@ h1{font-size:clamp(21px,4.4vw,29px);font-weight:800;letter-spacing:-.02em;text-w
   padding:10px 11px;background:var(--panel);border:1px solid var(--line);border-radius:9px
 }
 .fund div{text-align:center}
-.fund .fl{font-size:10px;font-weight:700;letter-spacing:.06em;color:var(--ink3)}
+.fund .fl{font-size:10px;font-weight:700;letter-spacing:.06em;color:var(--ink3);
+  word-break:keep-all;line-height:1.35}
 .fund .fv{font-size:14px;font-weight:700;margin-top:2px}
 
 .why{list-style:none;font-size:12.5px;color:var(--ink2)}
@@ -223,6 +224,9 @@ footer b{color:var(--ink2)}
   .px{text-align:left}
   .dgrid{grid-template-columns:1fr;gap:16px}
   .plan{grid-template-columns:repeat(2,1fr)}
+  .fund{gap:6px;padding:9px 8px}
+  .fund .fl{font-size:9.5px;letter-spacing:0}
+  .fund .fv{font-size:12.5px}
 }
 """
 
