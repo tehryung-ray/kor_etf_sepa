@@ -63,9 +63,15 @@ h1{font-size:clamp(21px,4.4vw,29px);font-weight:800;letter-spacing:-.02em;text-w
 .sub{margin-top:7px;font-size:13px;color:var(--ink2)}
 .sub b{color:var(--ink);font-weight:600}
 .exclu{
-  display:inline-block;margin-top:9px;padding:3px 9px;border-radius:6px;
+  display:inline-block;padding:3px 9px;border-radius:6px;
   background:#2a1c14;border:1px solid #5a3a1e;color:#fcd34d;font-size:11.5px;font-weight:600
 }
+.hdrow{display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px;margin-top:11px}
+.guidelink{
+  display:inline-block;padding:4px 11px;border-radius:6px;background:#1d3050;
+  border:1px solid #3b5680;color:#9ec5f5;font-size:12px;font-weight:700;text-decoration:none
+}
+.guidelink:hover{background:#254068;color:#cfe3ff}
 
 /* ── 시장 요약 ──────────────────────────────────────── */
 .market{
@@ -477,7 +483,7 @@ def build_html(data: Dict) -> str:
     # 네이버 조회 실패로 캐시를 썼다면 순자산·NAV가 최신이 아니라는 것을 밝힌다.
     if uni.get("source") == "cache":
         stale_note = (
-            '<div class="exclu" style="background:#2a1414;border-color:#5a1e1e;color:#fca5a5">'
+            '<div class="exclu" style="margin-top:9px;background:#2a1414;border-color:#5a1e1e;color:#fca5a5">'
             f'⚠ 종목 정보 갱신 실패 — {_esc(uni.get("source_fetched_at") or "이전")} 스냅샷 사용 '
             '(순자산 · NAV 괴리율이 최신이 아닙니다. 시세는 정상)</div>'
         )
@@ -505,7 +511,10 @@ def build_html(data: Dict) -> str:
     <h1>가중 모멘텀 상위 {total}개 ETF의 SEPA 점검</h1>
     <p class="sub">기준일 <b>{_esc(data['scan_date'])}</b> · 유니버스 <b>{data.get('universe_size', 0)}종목</b>
       · 모멘텀 가중치 <b>{_esc(weight_str)}</b></p>
-    <div class="exclu">레버리지 · 인버스 {uni.get('excluded_leverage_inverse', 0)}종목 제외</div>
+    <div class="hdrow">
+      <span class="exclu">레버리지 · 인버스 {uni.get('excluded_leverage_inverse', 0)}종목 제외</span>
+      <a class="guidelink" href="./guide.html">📖 처음이신가요? 사용법 보기 →</a>
+    </div>
     {stale_note}
   </div>
 </header>

@@ -48,11 +48,14 @@ from src.phase_indicators import (
 from src.sepa import score_sepa
 from src.etf_quality import build_quality
 from src.report import build_html
+from src.guide import build_guide_html
 
 logging.basicConfig(level=logging.INFO,
                     format="%(asctime)s %(levelname)s %(message)s")
 log = logging.getLogger(__name__)
 logging.getLogger("yfinance").setLevel(logging.ERROR)
+
+LINK_LABELS = {"toss": "토스증권", "naver": "네이버 금융"}
 
 
 def _json_safe(obj):
@@ -235,6 +238,22 @@ def main():
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(build_html(data), encoding="utf-8")
     log.info("HTML 저장: %s", out_path)
+
+    # 사용법 페이지 — 스캔 결과와 무관하지만 임계값·배점을 config에서 끌어오므로
+    # 설정을 바꾸면 설명도 같이 따라가도록 매번 다시 만든다.
+    guide_path = out_path.parent / "guide.html"
+    guide_path.write_text(build_guide_html({
+        "buy_threshold": config.SEPA_BUY_THRESHOLD,
+        "max_score": config.SEPA_MAX_SCORE,
+        "template_min": config.TEMPLATE_PASS_MIN,
+        "benchmark_label": config.BENCHMARK_LABEL,
+        "min_aum_eok": config.MIN_AUM_EOK,
+        "min_turnover_eok": config.MIN_TURNOVER_EOK,
+        "link_label": LINK_LABELS.get(config.LINK_PROVIDER, "증권사"),
+        "weight_str": " + ".join(
+            f"{v}×{k}개월" for k, v in sorted(config.MOMENTUM_WEIGHTS.items())),
+    }), encoding="utf-8")
+    log.info("사용법 저장: %s", guide_path)
 
     buys = sum(1 for r in data["results"] if r["is_buy"])
     log.info("=== 완료 ===  유니버스 %d · 분석 %d개 · 매수 적격 %d개",

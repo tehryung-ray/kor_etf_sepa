@@ -3,6 +3,7 @@
 ### 👉 **https://tehryung-ray.github.io/kor_etf_sepa/**
 
 평일 오후 5시(KST)에 자동 갱신됩니다.
+처음이시라면 → **[사용법: 언제 사고, 언제 파는가](https://tehryung-ray.github.io/kor_etf_sepa/guide.html)**
 
 ---
 
@@ -224,7 +225,7 @@ python run_daily.py
 **평일 저녁**에 갱신됩니다. 원본(미국장)과 달리 날짜가 넘어가지 않습니다.
 
 워크플로가 하는 일:
-1. 스캔 실행 → `docs/index.html` + `data/daily/latest.json` 생성
+1. 스캔 실행 → `docs/index.html` · `docs/guide.html` + `data/daily/latest.json` 생성
 2. 변경이 있으면 커밋 & 푸시 → GitHub Pages 자동 재배포
 3. 결과를 아티팩트로 90일 보관
 
@@ -244,7 +245,8 @@ kor_etf_sepa/
 ├── run_daily.py                    # 엔트리포인트
 ├── config.py                       # 전략 파라미터
 ├── requirements.txt
-├── docs/index.html                 # GitHub Pages 출력물
+├── docs/index.html                 # GitHub Pages 출력물 (스크리너)
+├── docs/guide.html                 # 사용법 안내 (초보자용)
 ├── data/daily/                     # 일자별 JSON 스냅샷
 ├── data/etf_universe.json          # 종목 목록 스냅샷 (네이버 장애 시 폴백)
 ├── .github/workflows/daily_scan.yml
@@ -254,7 +256,8 @@ kor_etf_sepa/
     ├── phase_indicators.py         # Phase 분류 · 트렌드 템플릿 · VCP (원본과 동일)
     ├── sepa.py                     # SEPA 진단 채점기 (게이트 제거판)
     ├── etf_quality.py              # 펀드 품질 지표 — 원본 fundamentals.py 자리
-    └── report.py                   # HTML 리포트 생성
+    ├── report.py                   # HTML 리포트 생성
+    └── guide.py                    # 사용법 페이지 생성
 ```
 
 `momentum.py`와 `phase_indicators.py`는 원본에서 **한 줄도 고치지 않고** 가져왔습니다.
