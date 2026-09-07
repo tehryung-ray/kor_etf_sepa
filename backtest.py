@@ -59,22 +59,30 @@ def load_cache(path: str) -> dict:
         return pickle.load(f)
 
 
+def _atr(df: pd.DataFrame, period: int = 14) -> pd.Series:
+    """Average True Range — 그 종목이 하루에 실제로 움직이는 폭."""
+    h, l, c = df["High"], df["Low"], df["Close"].shift(1)
+    tr = pd.concat([h - l, (h - c).abs(), (l - c).abs()], axis=1).max(axis=1)
+    return tr.rolling(period).mean()
+
+
 def build_matrices(prices: dict):
-    """종가·거래대금 매트릭스와 코드별 인덱스 배열을 만든다."""
+    """종가·거래대금·ATR 매트릭스와 코드별 인덱스 배열을 만든다."""
     close = pd.DataFrame({c: d["Close"] for c, d in prices.items()}).sort_index()
     turnover = pd.DataFrame({
         c: (d["Close"] * d["Volume"]).rolling(20).mean() / 1e8   # 억원
         for c, d in prices.items()
     }).sort_index()
+    atr = pd.DataFrame({c: _atr(d) for c, d in prices.items()}).sort_index()
     idx_vals = {c: d.index.values for c, d in prices.items()}
-    return close, turnover, idx_vals
+    return close, turnover, atr, idx_vals
 
 
 # ── 포지션 ────────────────────────────────────────────────────────────
 class Position:
     __slots__ = ("code", "name", "category", "entry_date", "entry", "stop",
                  "mid", "target", "shares", "init_shares", "half_done",
-                 "sepa", "momentum", "realized", "fees")
+                 "sepa", "momentum", "realized", "fees", "peak")
 
     def __init__(self, code, name, category, entry_date, entry, stop, mid,
                  target, shares, sepa, momentum):
@@ -86,15 +94,17 @@ class Position:
         self.sepa, self.momentum = sepa, momentum
         self.realized = 0.0
         self.fees = 0.0
+        self.peak = entry          # 진입 후 최고 종가 (추적 손절용)
 
 
 def run(data: dict, start: str, end: str, top_n: int, fund_mode: str,
         risk_pct: float, max_positions: int, max_weight: float,
         fee_bp: float, initial: float, min_turnover: float,
-        require_c6: bool = False) -> dict:
+        require_c6: bool = False, trail_pct: float = 0.0,
+        atr_mult: float = 0.0) -> dict:
 
     prices, bm, meta = data["prices"], data["bm"], data["meta"]
-    close, turnover, idx_vals = build_matrices(prices)
+    close, turnover, atr, idx_vals = build_matrices(prices)
 
     # 벤치마크 정렬
     bm_close = bm["Close"]
@@ -137,9 +147,22 @@ def run(data: dict, start: str, end: str, top_n: int, fund_mode: str,
                 proceeds = p.shares * px * (1 - fee)
                 cash += proceeds
                 p.realized += proceeds
-                kind = "부분익절+본전청산" if p.half_done else "손절"
+                if trail_pct > 0:
+                    kind = "추적익절" if px >= p.entry else "손절"
+                else:
+                    kind = "부분익절+본전청산" if p.half_done else "손절"
                 trades.append(_close_trade(p, today, px, kind))
                 del positions[code]
+                continue
+
+            if trail_pct > 0:
+                # 고정 익절가를 쓰지 않는다. 오늘 종가로 최고가를 갱신하고
+                # 손절가를 그 아래로 끌어올린다(내려가지는 않는다).
+                # 오늘 손절 판정은 이미 끝났으므로 미래 정보가 아니다.
+                c_ = float(bar["Close"])
+                if c_ > p.peak:
+                    p.peak = c_
+                p.stop = max(p.stop, p.peak * (1 - trail_pct))
                 continue
 
             # 1차 익절
@@ -173,7 +196,17 @@ def run(data: dict, start: str, end: str, top_n: int, fund_mode: str,
             if entry <= 0:
                 continue
             # 신호 시점 손절/익절 비율을 시가에 재적용 (가격이 갭이 나도 계획은 비율 유지)
-            stop = entry * (sig["stop"] / sig["price"])
+            if atr_mult > 0 and sig.get("atr", 0) > 0:
+                # 손절폭을 그 종목이 실제로 움직이는 폭(ATR)에 맞춘다.
+                # 변동성이 큰 상품일수록 넓게, 작을수록 좁게 잡힌다.
+                stop = entry - atr_mult * sig["atr"]
+                risk_r = (entry - stop) / entry
+                if risk_r < 0.05:
+                    stop = entry * 0.95
+                elif risk_r > 0.20:
+                    stop = entry * 0.80
+            else:
+                stop = entry * (sig["stop"] / sig["price"])
             target = entry * (sig["target"] / sig["price"])
             mid = (entry + target) / 2
             risk_per_share = entry - stop
@@ -248,8 +281,10 @@ def run(data: dict, start: str, end: str, top_n: int, fund_mode: str,
             if res["is_buy"]:
                 n_elig += 1
                 if code not in positions:
+                    a = atr.at[today, code] if code in atr.columns else np.nan
                     pending.append({"code": code, "price": price,
                                     "stop": res["stop_loss"], "target": res["target"],
+                                    "atr": float(a) if pd.notna(a) else 0.0,
                                     "sepa": res["sepa_score"], "momentum": round(float(mscore), 4)})
         daily_eligible.append(n_elig)
 
@@ -293,7 +328,7 @@ def run(data: dict, start: str, end: str, top_n: int, fund_mode: str,
             "top_n": top_n, "fund_mode": fund_mode, "risk_pct": risk_pct,
             "max_positions": max_positions, "max_weight": max_weight,
             "fee_bp": fee_bp, "initial": initial, "min_turnover_eok": min_turnover,
-            "require_c6": require_c6,
+            "require_c6": require_c6, "trail_pct": trail_pct, "atr_mult": atr_mult,
             "template_min": config.TEMPLATE_PASS_MIN,
             "sepa_threshold": config.SEPA_BUY_THRESHOLD,
             "momentum_weights": config.MOMENTUM_WEIGHTS,
@@ -346,13 +381,17 @@ def main():
     ap.add_argument("--min-turnover", type=float, default=config.MIN_TURNOVER_EOK)
     ap.add_argument("--require-c6", action="store_true",
                     help="'52주 저가 대비 +30%%' 조건을 필수로 (저변동 상품 배제)")
+    ap.add_argument("--trail-pct", type=float, default=0.0,
+                    help="추적 손절 폭 (예: 0.15). 0이면 기존 고정 익절 방식")
+    ap.add_argument("--atr-mult", type=float, default=0.0,
+                    help="ATR 배수로 손절폭 결정 (예: 3.0). 0이면 기존 방식")
     ap.add_argument("--out", default=None)
     args = ap.parse_args()
 
     data = load_cache(args.cache)
     res = run(data, args.start, args.end, args.top, args.fund_mode, args.risk,
               args.max_positions, args.max_weight, args.fee_bp, args.initial,
-              args.min_turnover, args.require_c6)
+              args.min_turnover, args.require_c6, args.trail_pct, args.atr_mult)
 
     out = Path(args.out) if args.out else ROOT / "data" / f"backtest_{args.fund_mode}.json"
     out.parent.mkdir(parents=True, exist_ok=True)

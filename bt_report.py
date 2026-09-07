@@ -144,6 +144,10 @@ table.bt-t td{padding:8px 10px;border-bottom:1px solid #1b2436;text-align:right;
   font-variant-numeric:tabular-nums;color:var(--ink2)}
 table.bt-t tbody tr:hover{background:var(--panel2)}
 table.bt-t td.name{color:var(--ink);font-weight:600}
+table.bt-t tr.hl td{background:#122b21}
+table.bt-t tr.hl td.name{color:#6ee7b7}
+table.bt-t tr.bench td{border-top:2px solid var(--line);color:var(--ink3)}
+table.bt-t tr.bench td.name{color:var(--ink2)}
 .twrap{overflow-x:auto}
 
 .chart{background:var(--panel);border:1px solid var(--line);border-radius:12px;
@@ -287,6 +291,51 @@ def diagnose(res: dict, prices: dict, lookahead_days: int = 120) -> dict:
     return out
 
 
+
+_VERDICT = """
+  <h3>① 추적 손절 — <span style="color:var(--bad)">효과 없음. 오히려 나빠졌다</span></h3>
+  <p>가장 기대했던 처방인데 <b>틀렸습니다.</b> 고정 익절가를 없애고 최고가에서
+    일정 % 아래로 손절가를 따라 올리게 했더니, 총수익이 기준 +12.9%에서
+    <b>추적 15% 기준 +5.9%로 떨어졌습니다.</b> 폭을 넓힐수록(10% → 15% → 20%) 더 나빠졌습니다.</p>
+  <p>진단 자체는 맞았습니다. 승자는 실제로 풀려서, 최대 이익 거래가 +29.9%(고정 익절 상한)에서
+    <b>+120%</b>까지 늘었습니다. 문제는 그 대가입니다. 추적 손절은 <b>고점에서 항상 그 폭만큼
+    되돌려주고 나옵니다.</b> +20% 갔다가 15% 되돌리면 +2%에 청산됩니다.</p>
+  <p>그 결과 <b>거래의 39%가 −5%~+5% 사이 무승부로 끝났습니다</b>(기준 24%).
+    +5%를 넘긴 거래는 63건에서 28건으로 줄었습니다. 소수의 큰 승자가 늘어난 것보다,
+    <b>중간 크기 승자가 무승부로 바뀐 손실이 더 컸습니다.</b></p>
+
+  <h3>② ATR 손절 — <span style="color:var(--good)">효과 있음</span></h3>
+  <p>손절폭을 3~10% 고정에서 <b>그 종목이 실제로 움직이는 폭(ATR 14일 × 3배)</b>에
+    맞췄습니다. 총수익 +16.8%로 소폭 개선이지만, <b>최대 낙폭이 −24.6%에서 −11.9%로 절반</b>이 됐고
+    승률 31%→38%, PF 0.99→1.08로 모두 좋아졌습니다.</p>
+  <p>변동성이 큰 상품은 넓게, 작은 상품은 좁게 잡히니 <b>되돌림에 털리는 일이 줄었습니다.</b>
+    ±5% 무승부 거래가 24%에서 8%로 떨어진 것이 그 증거입니다.</p>
+
+  <h3>③ ‘52주 저가 +30%’ 필수 — <span style="color:var(--good)">효과 있음 (단, 낙폭 악화)</span></h3>
+  <p>채권·단기금리 ETF가 슬롯을 영구 점유하던 문제가 사라졌습니다. 거래가 211건에서
+    <b>464건</b>으로 늘고 총수익도 +39.4%로 세 배가 됐습니다. 다만 자금이 계속 회전하면서
+    <b>최대 낙폭이 −45.6%로 크게 나빠졌습니다.</b> 이건 단독으로 쓰기 어렵습니다.</p>
+
+  <h3>★ ②+③ 조합이 가장 좋았다</h3>
+  <p><b>ATR 손절 + ‘52주 저가 +30%’ 필수</b>를 함께 적용하면 총수익 <b>+79.0%</b>
+    (CAGR +7.9%), 최대 낙폭 −26.3%, 승률 <b>46%</b>, PF <b>1.32</b>로
+    모든 지표가 기준보다 낫습니다. ③이 슬롯을 풀어 기회를 늘리고, ②가 그 기회를
+    되돌림에서 지켜 주는 조합입니다.</p>
+  <p>여기에 ①(추적 손절)을 더하면 오히려 +25.6%로 다시 떨어집니다. 세 개를 다 넣는 게
+    답이 아니었습니다.</p>
+
+  <div class="warnbox" style="margin-top:22px">
+    <span class="ct">그래도 매수후보유를 이기지 못한다</span>
+    가장 좋은 조합(②+③)도 <b>+79.0% / CAGR +7.9%</b>입니다. 같은 기간 KODEX 200을
+    그냥 사서 들고 있으면 <b>+370.4% / CAGR +22.4%</b>였습니다. 위험 대비로 봐도
+    Sharpe 0.54 대 0.87로 밀립니다.<br><br>
+    이 기간이 KOSPI가 세 배 넘게 오른 <b>이례적 강세장</b>이었다는 점은 감안해야 합니다.
+    추세를 따라 들어갔다 나왔다 하는 전략은 이런 국면에서 구조적으로 뒤집니다.
+    하지만 <b>이 백테스트가 보여주는 것은 그것뿐</b>이고, 다른 국면에서 낫다는 증거는
+    여기에 없습니다. 게다가 생존편향 때문에 위 숫자들은 실제보다 좋게 나온 값입니다.
+  </div>
+"""
+
 def _diagnosis(d: dict) -> str:
     if not d or not d.get("n_win"):
         return ""
@@ -397,29 +446,40 @@ def build_report(res: dict, bench: dict, variants: dict = None, diag: dict = Non
 
     alt_html = ""
     if variants:
-        rows = [("기준 — 규칙 그대로", st, ts["n"])]
+        rows = [("규칙 그대로 (기준)", st, ts)]
         for label, v in variants.items():
             vs = stats_from_curve([e["date"] for e in v["equity_curve"]],
                                   [e["equity"] for e in v["equity_curve"]],
                                   v["params"]["initial"])
-            rows.append((label, vs, len(v["trades"])))
-        for label, (curve, color) in bench.items():
-            if label in bstats:
-                rows.append((f"{label} 매수후보유", bstats[label], 1))
+            vt = trade_stats(v["trades"], v["open_positions"])
+            rows.append((label, vs, vt))
         body = "".join(
-            f'<tr><td class="name">{_esc(lab)}</td>'
+            f'<tr{" class=\"hl\"" if lab.startswith("★") else ""}>'
+            f'<td class="name">{_esc(lab)}</td>'
             f'<td class="{_sign(v["total_return"])}">{v["total_return"]:+.1f}%</td>'
             f'<td class="{_sign(v["cagr"])}">{v["cagr"]:+.1f}%</td>'
             f'<td class="neg">{v["mdd"]:.1f}%</td>'
-            f'<td>{v["sharpe"]:.2f}</td><td>{n:,}건</td></tr>'
-            for lab, v, n in rows)
+            f'<td>{v["sharpe"]:.2f}</td><td>{t["n"]:,}</td>'
+            f'<td>{t["win_rate"]:.0f}%</td>'
+            f'<td class="{_sign(t["profit_factor"] - 1)}">{t["profit_factor"]:.2f}</td></tr>'
+            for lab, v, t in rows)
+        bbody = "".join(
+            f'<tr class="bench"><td class="name">{_esc(label)} 매수후보유</td>'
+            f'<td class="{_sign(bstats[label]["total_return"])}">{bstats[label]["total_return"]:+.1f}%</td>'
+            f'<td class="{_sign(bstats[label]["cagr"])}">{bstats[label]["cagr"]:+.1f}%</td>'
+            f'<td class="neg">{bstats[label]["mdd"]:.1f}%</td>'
+            f'<td>{bstats[label]["sharpe"]:.2f}</td><td>—</td><td>—</td><td>—</td></tr>'
+            for label in bench if label in bstats)
         alt_html = f"""
-  <h2>변형 비교</h2>
+  <h2>세 가지 처방을 검증했다</h2>
+  <p>앞의 진단에서 나온 세 가지 문제에 각각 대응하는 수정안을 만들어,
+     같은 기간·같은 조건으로 다시 돌렸습니다. 조합도 함께 시험했습니다.</p>
   <div class="twrap">
   <table class="bt-t"><thead><tr><th>구분</th><th>총수익</th><th>CAGR</th><th>MDD</th>
-    <th>Sharpe</th><th>거래</th></tr></thead><tbody>{body}</tbody></table></div>
-  <p class="note">‘펀드 품질 채점’은 과거 순자산·NAV가 없어 <b>오늘 값</b>을 넣은 것이라
-    미래 정보가 섞여 있습니다. ‘+30% 조건 필수’는 아래 진단에서 설명합니다.</p>"""
+    <th>Sharpe</th><th>거래</th><th>승률</th><th>PF</th></tr></thead>
+    <tbody>{body}{bbody}</tbody></table></div>
+  <p class="note">PF(손익비) = 총이익 ÷ 총손실. 1을 넘어야 이익이 납니다.
+    ‘펀드 품질 채점’은 과거 순자산·NAV가 없어 <b>오늘 값</b>을 넣은 것이라 미래 정보가 섞여 있습니다.</p>"""
 
     bench_kpis = ""
     for label in bench:
@@ -430,6 +490,7 @@ def build_report(res: dict, bench: dict, variants: dict = None, diag: dict = Non
                                _sign(b["total_return"]))
 
     diag_html = _diagnosis(diag) if diag else ""
+    verdict_html = _VERDICT if variants else ""
 
     now = datetime.now().strftime("%Y-%m-%d %H:%M")
     wr = ts["win_rate"]
@@ -541,9 +602,11 @@ def build_report(res: dict, bench: dict, variants: dict = None, diag: dict = Non
     <b>{avg_pos:.1f}개</b>였습니다(최대 {p['max_positions']}개). 나머지는 현금입니다.
     이 전략이 시장에 늘 들어가 있지 않다는 뜻이고, 벤치마크와 단순 비교하기 어려운 이유이기도 합니다.</p>
 
+  {diag_html}
+
   {alt_html}
 
-  {diag_html}
+  {verdict_html}
 
   <h2>실행 규칙</h2>
   <ul>
