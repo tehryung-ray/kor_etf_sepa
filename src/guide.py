@@ -497,6 +497,13 @@ def build_guide_html(cfg: Dict) -> str:
     잃어도 생활에 지장이 없는 돈으로만, 처음에는 아주 작게 시작하세요.
   </div>
 
+  <div class="callout warn" style="margin-top:26px">
+    <span class="ct">이 규칙을 과거에 적용하면 어땠을까</span>
+    2019년부터 실제 데이터로 돌려 봤습니다. 결과는 좋지 않았고, 그 이유까지 정리했습니다.
+    <b>돈을 넣기 전에 꼭 읽어보세요.</b><br>
+    <a href="./backtest.html" style="color:#fde68a;font-weight:700">백테스트 결과 보기 →</a>
+  </div>
+
   <p style="margin-top:22px"><a class="backlink" href="./index.html">← 스크리너로 돌아가기</a></p>
 
 </div>

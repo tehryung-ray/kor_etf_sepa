@@ -44,6 +44,8 @@ h1{font-size:clamp(21px,4.4vw,29px);font-weight:800;letter-spacing:-.02em;text-w
   border:1px solid #3b5680;color:#9ec5f5;font-size:12px;font-weight:700;text-decoration:none
 }
 .guidelink:hover{background:#254068;color:#cfe3ff}
+.guidelink.btlink{background:#3a1f1f;border-color:#6b3030;color:#f0a8a8}
+.guidelink.btlink:hover{background:#4a2828;color:#ffd0d0}
 
 /* ── 시장 요약 ──────────────────────────────────────── */
 .market{
@@ -251,6 +253,7 @@ footer b{color:var(--ink2)}
     <div class="hdrow">
       <span class="exclu">레버리지 · 인버스 103종목 제외</span>
       <a class="guidelink" href="./guide.html">📖 처음이신가요? 사용법 보기 →</a>
+      <a class="guidelink btlink" href="./backtest.html">📉 과거 성과 백테스트 →</a>
     </div>
     
   </div>
@@ -318,12 +321,12 @@ footer b{color:var(--ink2)}
     </div>
   </summary>
   <div class="detail">
-    <div class="fund"><div><div class="fl">순자산</div><div class="fv num">1,224억</div></div><div><div class="fl">거래대금 20일 평균</div><div class="fv num">378.7억/일</div></div><div><div class="fl">NAV 괴리율</div><div class="fv num">-0.05%</div></div></div>
+    <div class="fund"><div><div class="fl">순자산</div><div class="fv num">1,215억</div></div><div><div class="fl">거래대금 20일 평균</div><div class="fv num">378.7억/일</div></div><div><div class="fl">NAV 괴리율</div><div class="fv num">-0.05%</div></div></div>
     <div class="planhead"><span>매매 계획</span><a href="./guide.html#sell">쓰는 법 →</a></div><div class="plan"><div><div class="pl">현재가</div><div class="pv num">18,545원</div><div class="pa">여기서 매수</div></div><div><div class="pl">손절가</div><div class="pv stop num">17,989원</div><div class="pa">닿으면 <b>전량 매도</b></div></div><div><div class="pl">1차 익절</div><div class="pv mid num">21,327원</div><div class="pa"><b>절반 매도</b><br>손절가를 매수가로</div></div><div><div class="pl">최종 익절</div><div class="pv tgt num">24,108원</div><div class="pa">나머지 <b>전량 매도</b></div></div></div><div class="plannote">이 네 숫자는 <b>오늘 사는 사람 기준</b>으로 매일 새로 계산됩니다. 매수했다면 그날 값을 따로 적어두고 그 숫자로 관리하세요.</div>
     <div class="dgrid">
       <div>
         <div class="dtitle">SEPA 점수 구성</div>
-        <div class="comp"><span class="cn">추세 구조</span><span class="cb"><i style="width:75%"></i></span><span class="cv num">30<small style="color:var(--ink3)">/40</small></span></div><div class="comp"><span class="cn">펀드 품질</span><span class="cb"><i style="width:82%"></i></span><span class="cv num">32.7<small style="color:var(--ink3)">/40</small></span></div><div class="comp"><span class="cn">손익비</span><span class="cb"><i style="width:100%"></i></span><span class="cv num">15<small style="color:var(--ink3)">/15</small></span></div><div class="comp"><span class="cn">상대강도</span><span class="cb"><i style="width:100%"></i></span><span class="cv num">10<small style="color:var(--ink3)">/10</small></span></div><div class="comp"><span class="cn">거래량</span><span class="cb"><i style="width:0%"></i></span><span class="cv num">0<small style="color:var(--ink3)">/10</small></span></div><div class="comp"><span class="cn">진입 품질</span><span class="cb"><i style="width:72%"></i></span><span class="cv num">3.6<small style="color:var(--ink3)">/5</small></span></div><div class="comp"><span class="cn">VCP</span><span class="cb"><i style="width:0%"></i></span><span class="cv num">0<small style="color:var(--ink3)">/5</small></span></div>
+        <div class="comp"><span class="cn">추세 구조</span><span class="cb"><i style="width:75%"></i></span><span class="cv num">30<small style="color:var(--ink3)">/40</small></span></div><div class="comp"><span class="cn">펀드 품질</span><span class="cb"><i style="width:82%"></i></span><span class="cv num">32.6<small style="color:var(--ink3)">/40</small></span></div><div class="comp"><span class="cn">손익비</span><span class="cb"><i style="width:100%"></i></span><span class="cv num">15<small style="color:var(--ink3)">/15</small></span></div><div class="comp"><span class="cn">상대강도</span><span class="cb"><i style="width:100%"></i></span><span class="cv num">10<small style="color:var(--ink3)">/10</small></span></div><div class="comp"><span class="cn">거래량</span><span class="cb"><i style="width:0%"></i></span><span class="cv num">0<small style="color:var(--ink3)">/10</small></span></div><div class="comp"><span class="cn">진입 품질</span><span class="cb"><i style="width:72%"></i></span><span class="cv num">3.6<small style="color:var(--ink3)">/5</small></span></div><div class="comp"><span class="cn">VCP</span><span class="cb"><i style="width:0%"></i></span><span class="cv num">0<small style="color:var(--ink3)">/5</small></span></div>
       </div>
       <div>
         <div class="dtitle">미너비니 트렌드 템플릿 8/8</div>
@@ -332,7 +335,7 @@ footer b{color:var(--ink2)}
     </div>
     <div class="dtitle" style="margin-top:16px">주요 지표</div><div style="font-size:12.5px;color:var(--ink2)">RS 기울기 +0.842 · 손익비 10.0:1 · 52주고가 대비 -11.8%</div>
     <div class="dtitle" style="margin-top:16px">채점 근거</div>
-    <ul class="why"><li>강한 상승추세: 50일선 +15.1%</li><li>이평선 강한 상승 (50:0.651 / 200:0.182)</li><li>🟢 순자산 1,224억원</li><li>🟢 거래대금 20일 평균 379억/일 (호가 두터움)</li><li>✓ NAV 괴리율 -0.05% (정상)</li><li>⚠ 하락일 거래량 우위 (비율 0.00 — 분산 매도)</li><li>✓ 강한 상대강도: 0.842 (KOSPI 대비 초과수익)</li><li>🟢 탁월한 손익비: 10.0:1 (상승 5,564원 / 위험 556원)</li><li>🟢 52주 고가 근접: 고가 대비 11.8%</li></ul>
+    <ul class="why"><li>강한 상승추세: 50일선 +15.1%</li><li>이평선 강한 상승 (50:0.651 / 200:0.182)</li><li>🟢 순자산 1,215억원</li><li>🟢 거래대금 20일 평균 379억/일 (호가 두터움)</li><li>✓ NAV 괴리율 -0.05% (정상)</li><li>⚠ 하락일 거래량 우위 (비율 0.00 — 분산 매도)</li><li>✓ 강한 상대강도: 0.842 (KOSPI 대비 초과수익)</li><li>🟢 탁월한 손익비: 10.0:1 (상승 5,564원 / 위험 556원)</li><li>🟢 52주 고가 근접: 고가 대비 11.8%</li></ul>
     <div class="block pass">✅ 매수 적격 — Phase 2 · Trend Template 통과 · SEPA 임계값 충족</div>
     <div class="links"><a href="https://tossinvest.com/stocks/0008T0" target="_blank" rel="noopener noreferrer">토스증권에서 보기 →</a><a href="https://finance.naver.com/item/main.naver?code=0008T0" target="_blank" rel="noopener noreferrer">네이버 금융에서 보기 →</a></div>
   </div>
@@ -454,7 +457,7 @@ footer b{color:var(--ink2)}
     </div>
   </summary>
   <div class="detail">
-    <div class="fund"><div><div class="fl">순자산</div><div class="fv num">514억</div></div><div><div class="fl">거래대금 20일 평균</div><div class="fv num">24.5억/일</div></div><div><div class="fl">NAV 괴리율</div><div class="fv num">-0.12%</div></div></div>
+    <div class="fund"><div><div class="fl">순자산</div><div class="fv num">507억</div></div><div><div class="fl">거래대금 20일 평균</div><div class="fv num">24.5억/일</div></div><div><div class="fl">NAV 괴리율</div><div class="fv num">-0.12%</div></div></div>
     <div class="planhead"><span>매매 계획</span><a href="./guide.html#sell">쓰는 법 →</a></div><div class="plan"><div><div class="pl">현재가</div><div class="pv num">25,695원</div><div class="pa">여기서 매수</div></div><div><div class="pl">손절가</div><div class="pv stop num">23,126원</div><div class="pa">닿으면 <b>전량 매도</b></div></div><div><div class="pl">1차 익절</div><div class="pv mid num">29,549원</div><div class="pa"><b>절반 매도</b><br>손절가를 매수가로</div></div><div><div class="pl">최종 익절</div><div class="pv tgt num">33,404원</div><div class="pa">나머지 <b>전량 매도</b></div></div></div><div class="plannote">이 네 숫자는 <b>오늘 사는 사람 기준</b>으로 매일 새로 계산됩니다. 매수했다면 그날 값을 따로 적어두고 그 숫자로 관리하세요.</div>
     <div class="dgrid">
       <div>
@@ -468,7 +471,7 @@ footer b{color:var(--ink2)}
     </div>
     <div class="dtitle" style="margin-top:16px">주요 지표</div><div style="font-size:12.5px;color:var(--ink2)">RS 기울기 +0.398 · 손익비 3.0:1 · 52주고가 대비 -11.1%</div>
     <div class="dtitle" style="margin-top:16px">채점 근거</div>
-    <ul class="why"><li>강한 상승추세: 50일선 +15.1%</li><li>이평선 완만한 상승</li><li>🟡 순자산 514억원 (중소형)</li><li>🟢 거래대금 20일 평균 24.5억/일</li><li>✓ NAV 괴리율 -0.12% (정상)</li><li>상승일 거래량 소폭 우위 (비율 1.20)</li><li>✓ 강한 상대강도: 0.398 (KOSPI 대비 초과수익)</li><li>🟢 양호한 손익비: 3.0:1</li><li>🟢 52주 고가 근접: 고가 대비 11.1%</li></ul>
+    <ul class="why"><li>강한 상승추세: 50일선 +15.1%</li><li>이평선 완만한 상승</li><li>🟡 순자산 507억원 (중소형)</li><li>🟢 거래대금 20일 평균 24.5억/일</li><li>✓ NAV 괴리율 -0.12% (정상)</li><li>상승일 거래량 소폭 우위 (비율 1.20)</li><li>✓ 강한 상대강도: 0.398 (KOSPI 대비 초과수익)</li><li>🟢 양호한 손익비: 3.0:1</li><li>🟢 52주 고가 근접: 고가 대비 11.1%</li></ul>
     <div class="block pass">✅ 매수 적격 — Phase 2 · Trend Template 통과 · SEPA 임계값 충족</div>
     <div class="links"><a href="https://tossinvest.com/stocks/261220" target="_blank" rel="noopener noreferrer">토스증권에서 보기 →</a><a href="https://finance.naver.com/item/main.naver?code=261220" target="_blank" rel="noopener noreferrer">네이버 금융에서 보기 →</a></div>
   </div>
@@ -556,7 +559,7 @@ footer b{color:var(--ink2)}
     </div>
   </summary>
   <div class="detail">
-    <div class="fund"><div><div class="fl">순자산</div><div class="fv num">2,820억</div></div><div><div class="fl">거래대금 20일 평균</div><div class="fv num">424.1억/일</div></div><div><div class="fl">NAV 괴리율</div><div class="fv num">-0.48%</div></div></div>
+    <div class="fund"><div><div class="fl">순자산</div><div class="fv num">2,815억</div></div><div><div class="fl">거래대금 20일 평균</div><div class="fv num">424.1억/일</div></div><div><div class="fl">NAV 괴리율</div><div class="fv num">-0.48%</div></div></div>
     <div class="planhead"><span>매매 계획</span><a href="./guide.html#sell">쓰는 법 →</a></div><div class="plan"><div><div class="pl">현재가</div><div class="pv num">4,520원</div><div class="pa">여기서 매수</div></div><div><div class="pl">손절가</div><div class="pv stop num">4,384원</div><div class="pa">닿으면 <b>전량 매도</b></div></div><div><div class="pl">1차 익절</div><div class="pv mid num">5,198원</div><div class="pa"><b>절반 매도</b><br>손절가를 매수가로</div></div><div><div class="pl">최종 익절</div><div class="pv tgt num">5,876원</div><div class="pa">나머지 <b>전량 매도</b></div></div></div><div class="plannote">이 네 숫자는 <b>오늘 사는 사람 기준</b>으로 매일 새로 계산됩니다. 매수했다면 그날 값을 따로 적어두고 그 숫자로 관리하세요.</div>
     <div class="dgrid">
       <div>
@@ -570,7 +573,7 @@ footer b{color:var(--ink2)}
     </div>
     <div class="dtitle" style="margin-top:16px">주요 지표</div><div style="font-size:12.5px;color:var(--ink2)">RS 기울기 +0.473 · 손익비 10.0:1 · 52주고가 대비 -11.6%</div>
     <div class="dtitle" style="margin-top:16px">채점 근거</div>
-    <ul class="why"><li>강한 상승추세: 50일선 +11.3%</li><li>이평선 강한 상승 (50:0.651 / 200:0.134)</li><li>🟢 순자산 2,820억원</li><li>🟢 거래대금 20일 평균 424억/일 (호가 두터움)</li><li>🟡 NAV 괴리율 -0.48%</li><li>⚠ 하락일 거래량 우위 (비율 0.00 — 분산 매도)</li><li>✓ 강한 상대강도: 0.473 (KOSPI 대비 초과수익)</li><li>🟢 탁월한 손익비: 10.0:1 (상승 1,356원 / 위험 136원)</li><li>🟢 52주 고가 근접: 고가 대비 11.6%</li></ul>
+    <ul class="why"><li>강한 상승추세: 50일선 +11.3%</li><li>이평선 강한 상승 (50:0.651 / 200:0.134)</li><li>🟢 순자산 2,815억원</li><li>🟢 거래대금 20일 평균 424억/일 (호가 두터움)</li><li>🟡 NAV 괴리율 -0.48%</li><li>⚠ 하락일 거래량 우위 (비율 0.00 — 분산 매도)</li><li>✓ 강한 상대강도: 0.473 (KOSPI 대비 초과수익)</li><li>🟢 탁월한 손익비: 10.0:1 (상승 1,356원 / 위험 136원)</li><li>🟢 52주 고가 근접: 고가 대비 11.6%</li></ul>
     <div class="block pass">✅ 매수 적격 — Phase 2 · Trend Template 통과 · SEPA 임계값 충족</div>
     <div class="links"><a href="https://tossinvest.com/stocks/228790" target="_blank" rel="noopener noreferrer">토스증권에서 보기 →</a><a href="https://finance.naver.com/item/main.naver?code=228790" target="_blank" rel="noopener noreferrer">네이버 금융에서 보기 →</a></div>
   </div>
@@ -862,7 +865,7 @@ footer b{color:var(--ink2)}
     </div>
   </summary>
   <div class="detail">
-    <div class="fund"><div><div class="fl">순자산</div><div class="fv num">2,725억</div></div><div><div class="fl">거래대금 20일 평균</div><div class="fv num">315.6억/일</div></div><div><div class="fl">NAV 괴리율</div><div class="fv num">+0.05%</div></div></div>
+    <div class="fund"><div><div class="fl">순자산</div><div class="fv num">2,735억</div></div><div><div class="fl">거래대금 20일 평균</div><div class="fv num">315.6억/일</div></div><div><div class="fl">NAV 괴리율</div><div class="fv num">+0.05%</div></div></div>
     <div class="planhead"><span>매매 계획</span><a href="./guide.html#sell">쓰는 법 →</a></div><div class="plan"><div><div class="pl">현재가</div><div class="pv num">21,370원</div><div class="pa">여기서 매수</div></div><div><div class="pl">손절가</div><div class="pv stop num">19,233원</div><div class="pa">닿으면 <b>전량 매도</b></div></div><div><div class="pl">1차 익절</div><div class="pv mid num">24,232원</div><div class="pa"><b>절반 매도</b><br>손절가를 매수가로</div></div><div><div class="pl">최종 익절</div><div class="pv tgt num">27,095원</div><div class="pa">나머지 <b>전량 매도</b></div></div></div><div class="plannote">이 네 숫자는 <b>오늘 사는 사람 기준</b>으로 매일 새로 계산됩니다. 매수했다면 그날 값을 따로 적어두고 그 숫자로 관리하세요.</div>
     <div class="dgrid">
       <div>
@@ -876,7 +879,7 @@ footer b{color:var(--ink2)}
     </div>
     <div class="dtitle" style="margin-top:16px">주요 지표</div><div style="font-size:12.5px;color:var(--ink2)">RS 기울기 +0.156 · 손익비 2.7:1 · 52주고가 대비 -35.6%</div>
     <div class="dtitle" style="margin-top:16px">채점 근거</div>
-    <ul class="why"><li>⚠ 50일선 이탈: -1.4%</li><li>⚠ 이평선 횡보 또는 하락</li><li>🟢 순자산 2,725억원</li><li>🟢 거래대금 20일 평균 316억/일 (호가 두터움)</li><li>✓ NAV 괴리율 +0.05% (정상)</li><li>거래량 중립 (비율 1.04)</li><li>✓ 강한 상대강도: 0.156 (KOSPI 대비 초과수익)</li><li>🟡 수용 가능한 손익비: 2.7:1</li><li>양호한 진입 구간: 50일선 -1.4%</li></ul>
+    <ul class="why"><li>⚠ 50일선 이탈: -1.4%</li><li>⚠ 이평선 횡보 또는 하락</li><li>🟢 순자산 2,735억원</li><li>🟢 거래대금 20일 평균 316억/일 (호가 두터움)</li><li>✓ NAV 괴리율 +0.05% (정상)</li><li>거래량 중립 (비율 1.04)</li><li>✓ 강한 상대강도: 0.156 (KOSPI 대비 초과수익)</li><li>🟡 수용 가능한 손익비: 2.7:1</li><li>양호한 진입 구간: 50일선 -1.4%</li></ul>
     <div class="block">⏸ 매수 보류 — Phase 1 (미너비니는 Phase 2만 매수)</div>
     <div class="links"><a href="https://tossinvest.com/stocks/475300" target="_blank" rel="noopener noreferrer">토스증권에서 보기 →</a><a href="https://finance.naver.com/item/main.naver?code=475300" target="_blank" rel="noopener noreferrer">네이버 금융에서 보기 →</a></div>
   </div>
@@ -999,7 +1002,7 @@ footer b{color:var(--ink2)}
        순자산 규모 15 · 유동성 15 · NAV 괴리율 10으로 옮겼습니다. 나머지 85점은 원본과 동일합니다.</p>
     <p><b>매수 적격</b> — Phase 2 · 트렌드 템플릿 7/8 이상 · SEPA 60점 이상을 모두 만족한 경우에만 표시됩니다.
        모멘텀 상위라도 대부분은 여기서 걸러집니다.</p>
-    <p style="margin-top:12px">갱신 2026-09-06 07:44 · 데이터 네이버 금융(종목·순자산·NAV) / yfinance(시세)</p>
+    <p style="margin-top:12px">갱신 2026-09-07 08:59 · 데이터 네이버 금융(종목·순자산·NAV) / yfinance(시세)</p>
     <p style="color:#4a5568">본 페이지는 정보 제공 목적이며 투자 자문이 아닙니다. 과거 성과는 미래 수익을 보장하지 않습니다.</p>
   </div>
 </footer>

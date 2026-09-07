@@ -4,6 +4,7 @@
 
 평일 오후 5시(KST)에 자동 갱신됩니다.
 처음이시라면 → **[사용법: 언제 사고, 언제 파는가](https://tehryung-ray.github.io/kor_etf_sepa/guide.html)**
+과거 성과 → **[백테스트 결과와 그 한계](https://tehryung-ray.github.io/kor_etf_sepa/backtest.html)**
 
 ---
 
@@ -247,6 +248,9 @@ kor_etf_sepa/
 ├── requirements.txt
 ├── docs/index.html                 # GitHub Pages 출력물 (스크리너)
 ├── docs/guide.html                 # 사용법 안내 (초보자용)
+├── docs/backtest.html              # 백테스트 결과 (수동 생성)
+├── backtest.py                     # 백테스트 엔진 — 실시간과 동일한 규칙 코드 사용
+├── bt_report.py                    # 백테스트 리포트 생성
 ├── data/daily/                     # 일자별 JSON 스냅샷
 ├── data/etf_universe.json          # 종목 목록 스냅샷 (네이버 장애 시 폴백)
 ├── .github/workflows/daily_scan.yml
@@ -270,6 +274,33 @@ kor_etf_sepa/
 리포지토리 최초 생성 후 한 번만:
 
 **Settings → Pages → Source: Deploy from a branch → Branch: `main` / `/docs`**
+
+---
+
+## 백테스트
+
+2019년부터 실제 데이터로 이 규칙을 그대로 돌려본 결과입니다.
+**결론부터: 같은 기간 KODEX 200 매수후보유(+370%)에 크게 뒤집니다.**
+
+| 구분 | 총수익 | CAGR | MDD | 거래 |
+|---|---|---|---|---|
+| 규칙 그대로 | +12.9% | +1.6% | −24.6% | 211건 |
+| ‘52주 저가 +30%’ 조건 필수 | +39.4% | +4.4% | −45.6% | 464건 |
+| KODEX 200 매수후보유 | **+370.4%** | +22.4% | −40.8% | — |
+| KOSPI | +232.5% | +17.0% | −38.6% | — |
+
+원인 세 가지와 상세는 **[백테스트 페이지](https://tehryung-ray.github.io/kor_etf_sepa/backtest.html)**
+에 정리했습니다. 요약하면 ① 고정 익절가(+30%)가 승자를 자르고, ② 손절폭(3~10%)이
+ETF에는 좁아 되돌림에 털리며, ③ 채권·단기금리 ETF가 관문을 통과한 뒤 손절·익절
+어디에도 닿지 않아 슬롯을 영구 점유합니다.
+
+```bash
+python backtest.py --cache <가격캐시.pkl> --start 2019-01-01
+python bt_report.py --result data/bt_neutral.json --cache <가격캐시.pkl>
+```
+
+> 생존편향이 있습니다. 유니버스가 '오늘 상장되어 있는' ETF 목록이라 그사이 상장폐지된
+> 상품은 처음부터 빠져 있습니다. **실제 성과는 위 숫자보다 나빴을 것입니다.**
 
 ---
 

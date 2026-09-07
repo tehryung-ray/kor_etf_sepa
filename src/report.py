@@ -72,6 +72,8 @@ h1{font-size:clamp(21px,4.4vw,29px);font-weight:800;letter-spacing:-.02em;text-w
   border:1px solid #3b5680;color:#9ec5f5;font-size:12px;font-weight:700;text-decoration:none
 }
 .guidelink:hover{background:#254068;color:#cfe3ff}
+.guidelink.btlink{background:#3a1f1f;border-color:#6b3030;color:#f0a8a8}
+.guidelink.btlink:hover{background:#4a2828;color:#ffd0d0}
 
 /* ── 시장 요약 ──────────────────────────────────────── */
 .market{
@@ -536,6 +538,7 @@ def build_html(data: Dict) -> str:
     <div class="hdrow">
       <span class="exclu">레버리지 · 인버스 {uni.get('excluded_leverage_inverse', 0)}종목 제외</span>
       <a class="guidelink" href="./guide.html">📖 처음이신가요? 사용법 보기 →</a>
+      <a class="guidelink btlink" href="./backtest.html">📉 과거 성과 백테스트 →</a>
     </div>
     {stale_note}
   </div>
