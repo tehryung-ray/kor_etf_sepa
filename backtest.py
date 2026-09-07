@@ -101,7 +101,7 @@ def run(data: dict, start: str, end: str, top_n: int, fund_mode: str,
         risk_pct: float, max_positions: int, max_weight: float,
         fee_bp: float, initial: float, min_turnover: float,
         require_c6: bool = False, trail_pct: float = 0.0,
-        atr_mult: float = 0.0) -> dict:
+        atr_mult: float = 0.0, live_stop: bool = False) -> dict:
 
     prices, bm, meta = data["prices"], data["bm"], data["meta"]
     close, turnover, atr, idx_vals = build_matrices(prices)
@@ -270,7 +270,11 @@ def run(data: dict, start: str, end: str, top_n: int, fund_mode: str,
                     template_pass_min=config.TEMPLATE_PASS_MIN,
                     buy_threshold=config.SEPA_BUY_THRESHOLD,
                     fund_quality_mode=fund_mode,
-                    benchmark_label=config.BENCHMARK_LABEL)
+                    benchmark_label=config.BENCHMARK_LABEL,
+                    stop_mode="atr" if live_stop else "swing",
+                    atr_period=config.ATR_PERIOD, atr_mult=config.ATR_MULT,
+                    atr_min=config.ATR_STOP_MIN, atr_max=config.ATR_STOP_MAX,
+                    require_52w_low=require_c6 and live_stop)
             except Exception:
                 continue
             # 저변동 상품(채권·단기금리 ETF) 차단용 옵션.
@@ -329,6 +333,7 @@ def run(data: dict, start: str, end: str, top_n: int, fund_mode: str,
             "max_positions": max_positions, "max_weight": max_weight,
             "fee_bp": fee_bp, "initial": initial, "min_turnover_eok": min_turnover,
             "require_c6": require_c6, "trail_pct": trail_pct, "atr_mult": atr_mult,
+            "live_stop": live_stop,
             "template_min": config.TEMPLATE_PASS_MIN,
             "sepa_threshold": config.SEPA_BUY_THRESHOLD,
             "momentum_weights": config.MOMENTUM_WEIGHTS,
@@ -385,13 +390,16 @@ def main():
                     help="추적 손절 폭 (예: 0.15). 0이면 기존 고정 익절 방식")
     ap.add_argument("--atr-mult", type=float, default=0.0,
                     help="ATR 배수로 손절폭 결정 (예: 3.0). 0이면 기존 방식")
+    ap.add_argument("--live-stop", action="store_true",
+                    help="라이브 코드 경로로 검증 (손절가가 SEPA 손익비 점수에도 반영됨)")
     ap.add_argument("--out", default=None)
     args = ap.parse_args()
 
     data = load_cache(args.cache)
     res = run(data, args.start, args.end, args.top, args.fund_mode, args.risk,
               args.max_positions, args.max_weight, args.fee_bp, args.initial,
-              args.min_turnover, args.require_c6, args.trail_pct, args.atr_mult)
+              args.min_turnover, args.require_c6, args.trail_pct, args.atr_mult,
+              args.live_stop)
 
     out = Path(args.out) if args.out else ROOT / "data" / f"backtest_{args.fund_mode}.json"
     out.parent.mkdir(parents=True, exist_ok=True)

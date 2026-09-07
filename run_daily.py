@@ -161,6 +161,12 @@ def run(top_n: int, exclude_leverage: bool = True) -> dict:
                 buy_threshold=config.SEPA_BUY_THRESHOLD,
                 fund_quality_mode=config.FUND_QUALITY_MODE,
                 benchmark_label=config.BENCHMARK_LABEL,
+                stop_mode=config.STOP_MODE,
+                atr_period=config.ATR_PERIOD,
+                atr_mult=config.ATR_MULT,
+                atr_min=config.ATR_STOP_MIN,
+                atr_max=config.ATR_STOP_MAX,
+                require_52w_low=config.REQUIRE_52W_LOW_CRITERION,
             )
 
             sepa.update({
@@ -194,6 +200,9 @@ def run(top_n: int, exclude_leverage: bool = True) -> dict:
         "max_score": config.SEPA_MAX_SCORE,
         "benchmark_label": config.BENCHMARK_LABEL,
         "link_provider": config.LINK_PROVIDER,
+        "stop_mode": config.STOP_MODE,
+        "atr_mult": config.ATR_MULT,
+        "require_52w_low": config.REQUIRE_52W_LOW_CRITERION,
         "universe": {
             **uni_stats,
             "excluded_leverage_inverse": uni_stats.get("leverage_inverse", 0),
@@ -250,6 +259,11 @@ def main():
         "min_aum_eok": config.MIN_AUM_EOK,
         "min_turnover_eok": config.MIN_TURNOVER_EOK,
         "link_label": LINK_LABELS.get(config.LINK_PROVIDER, "증권사"),
+        "stop_mode": config.STOP_MODE,
+        "atr_mult": config.ATR_MULT,
+        "atr_min": config.ATR_STOP_MIN,
+        "atr_max": config.ATR_STOP_MAX,
+        "require_52w_low": config.REQUIRE_52W_LOW_CRITERION,
         "weight_str": " + ".join(
             f"{v}×{k}개월" for k, v in sorted(config.MOMENTUM_WEIGHTS.items())),
     }), encoding="utf-8")

@@ -503,6 +503,19 @@ def build_html(data: Dict) -> str:
     weight_str = " + ".join(f"{v}×{k}개월" for k, v in sorted(w.items(), key=lambda x: int(x[0])))
 
     uni = data.get("universe", {})
+    stop_mode = data.get("stop_mode", "swing")
+    atr_mult = data.get("atr_mult", 3.0)
+    need_52w = data.get("require_52w_low", False)
+
+    stop_note = (
+        f'<p><b>손절가</b> — 종목이 하루에 실제로 움직이는 폭(ATR 14일)의 '
+        f'<b>{atr_mult:g}배</b>를 현재가에서 뺀 값입니다(5~20% 범위로 강제). '
+        f'모든 종목에 3~10%를 똑같이 적용하던 원본 방식은 되돌림에 자주 털려, '
+        f'<a href="./backtest.html" style="color:#7a8699">백테스트</a> 결과를 반영해 바꿨습니다.</p>'
+        if stop_mode == "atr" else "")
+    gate_note = (" 여기에 <b>‘52주 저가 대비 +30% 이상’</b>은 개수와 무관하게 필수입니다 — "
+                 "거의 움직이지 않는 채권형 상품이 통과하는 것을 막습니다."
+                 if need_52w else "")
 
     # 네이버 조회 실패로 캐시를 썼다면 순자산·NAV가 최신이 아니라는 것을 밝힌다.
     if uni.get("source") == "cache":
@@ -599,8 +612,9 @@ def build_html(data: Dict) -> str:
        마크 미너비니 <i>Trade Like a Stock Market Wizard</i>의 트렌드 템플릿과 SEPA 방법론 기반.</p>
     <p><b>펀드 품질 40점</b> — 개별주의 펀더멘털(매출·EPS·재고)은 ETF에 존재하지 않아, 같은 배점을
        순자산 규모 15 · 유동성 15 · NAV 괴리율 10으로 옮겼습니다. 나머지 85점은 원본과 동일합니다.</p>
-    <p><b>매수 적격</b> — Phase 2 · 트렌드 템플릿 7/8 이상 · SEPA {threshold}점 이상을 모두 만족한 경우에만 표시됩니다.
+    <p><b>매수 적격</b> — Phase 2 · 트렌드 템플릿 7/8 이상 · SEPA {threshold}점 이상을 모두 만족한 경우에만 표시됩니다.{gate_note}
        모멘텀 상위라도 대부분은 여기서 걸러집니다.</p>
+    {stop_note}
     <p style="margin-top:12px">갱신 {now} · 데이터 네이버 금융(종목·순자산·NAV) / yfinance(시세)</p>
     <p style="color:#4a5568">본 페이지는 정보 제공 목적이며 투자 자문이 아닙니다. 과거 성과는 미래 수익을 보장하지 않습니다.</p>
   </div>

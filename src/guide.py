@@ -140,9 +140,17 @@ def build_guide_html(cfg: Dict) -> str:
     aum = cfg["min_aum_eok"]
     tov = cfg["min_turnover_eok"]
     link = cfg["link_label"]
+    stop_mode = cfg.get("stop_mode", "swing")
+    atr_mult = cfg.get("atr_mult", 3.0)
+    atr_min = cfg.get("atr_min", 0.05) * 100
+    atr_max = cfg.get("atr_max", 0.20) * 100
+    need_52w = cfg.get("require_52w_low", False)
 
     # 예시용 가상 ETF — 실제 종목을 쓰면 특정 상품 추천처럼 읽히므로 일부러 지어낸 값이다.
-    ex_buy, ex_stop = 20000, 18600
+    # 손절가는 현재 설정된 방식으로 계산한 값에 맞춘다.
+    ex_buy = 20000
+    ex_atr = 900                       # 하루 평균 변동폭 900원인 ETF 가정
+    ex_stop = (ex_buy - int(atr_mult * ex_atr)) if stop_mode == "atr" else 18600
     ex_tgt = int(ex_buy * 1.30)
     ex_mid = (ex_buy + ex_tgt) // 2
     ex_risk = ex_buy - ex_stop
@@ -150,6 +158,39 @@ def build_guide_html(cfg: Dict) -> str:
     ex_budget = ex_acct * ex_pct // 100
     ex_qty = ex_budget // ex_risk
     ex_cost = ex_qty * ex_buy
+
+    gate2_extra = ("" if not need_52w else
+                   " 그중 <b>‘52주 저가 대비 +30% 이상’은 반드시</b> 통과해야 합니다.")
+
+    c6_note = ("" if not need_52w else
+               "그리고 <b>6번 ‘52주 저가 대비 +30% 이상’은 개수와 상관없이 반드시</b> "
+               "통과해야 합니다 — 8개 중 유일하게 <b>‘이 상품이 실제로 움직이는가’</b>를 "
+               "묻는 조건이라, 이게 빠지면 채권처럼 거의 움직이지 않는 상품이 "
+               "관문을 통과해 버립니다.")
+
+    if stop_mode == "atr":
+        stop_explain = f"""<ul>
+    <li>그 ETF가 <b>하루에 실제로 얼마나 움직이는지</b>(ATR)를 먼저 잽니다.
+      최근 14일 동안의 하루 등락폭 평균이라고 보면 됩니다.</li>
+    <li>손절가 = <b>현재가 − (하루 평균 등락폭 × {atr_mult:g})</b>.
+      크게 출렁이는 ETF는 손절가를 멀리, 얌전한 ETF는 가까이 둡니다.
+      <b>종목마다 손절폭이 다릅니다.</b></li>
+    <li>그렇게 나온 값이 현재가에서 <b>{atr_min:.0f}%보다 가까우면 {atr_min:.0f}%로</b>,
+      <b>{atr_max:.0f}%보다 멀면 {atr_max:.0f}%로</b> 맞춥니다.</li>
+  </ul>
+  <div class="callout">
+    <span class="ct">왜 이렇게 바꿨나</span>
+    원래는 모든 종목에 <b>3~10%</b>를 똑같이 적용했습니다. 그런데 과거 데이터로 검증해 보니
+    <b>손절된 거래의 71%가 6개월 안에 원래 매수가를 회복</b>했습니다. 위험을 막은 게 아니라
+    <b>잔파도에 흔들려 나온 것</b>입니다. ETF마다 움직이는 폭이 다른데 같은 자를 댄 게
+    원인이었습니다. <a href="./backtest.html#" style="color:#9ec5f5">백테스트 결과 보기 →</a>
+  </div>"""
+    else:
+        stop_explain = """<ul>
+    <li><b>최근 10일 중 가장 낮았던 가격</b>보다 살짝 아래, 또는 <b>50일선</b> 바로 아래 —
+      <b>둘 중 더 높은 쪽</b>을 씁니다. 최근 바닥이 깨지면 상승이 끝났다고 보는 것입니다.</li>
+    <li>그렇게 나온 값이 현재가에서 <b>3%보다 가까우면 3%로</b>, <b>10%보다 멀면 10%로</b> 맞춥니다.</li>
+  </ul>"""
 
     criteria_list = "".join(
         f"<li>{_esc(label)}</li>" for _, label in CRITERIA_LABELS
@@ -310,7 +351,7 @@ def build_guide_html(cfg: Dict) -> str:
       <div class="gn">관문 2</div>
       <div class="gt">템플릿 {tmin}칸 이상</div>
       <div class="gd">8개 조건 중 <b>{tmin}개 이상</b> 통과.
-        오르는 게 잠깐이 아니라 <b>구조가 튼튼한지</b>를 봅니다.</div>
+        오르는 게 잠깐이 아니라 <b>구조가 튼튼한지</b>를 봅니다.{gate2_extra}</div>
     </div>
     <div class="gate">
       <div class="gn">관문 3</div>
@@ -406,13 +447,8 @@ def build_guide_html(cfg: Dict) -> str:
   <p>가장 중요한 규칙이고, 가장 지키기 어려운 규칙입니다. 손절가는 <b>"내 판단이 틀렸다"고
     시장이 알려주는 가격</b>입니다. 여기서 '조금만 더 기다려보자'가 시작되면
     이 방법 전체가 무너집니다.</p>
-  <p>이 페이지의 손절가는 이렇게 계산됩니다(P2 기준):</p>
-  <ul>
-    <li><b>최근 10일 중 가장 낮았던 가격</b>보다 살짝 아래, 또는 <b>50일선</b> 바로 아래 —
-      <b>둘 중 더 높은 쪽</b>을 씁니다. 최근 바닥이 깨지면 상승이 끝났다고 보는 것입니다.</li>
-    <li>그렇게 나온 값이 현재가에서 <b>3%보다 가까우면 3%로</b>, <b>10%보다 멀면 10%로</b> 맞춥니다.
-      너무 가까우면 잔파도에 털리고, 너무 멀면 한 번에 크게 잃기 때문입니다.</li>
-  </ul>
+  <p>이 페이지의 손절가는 이렇게 계산됩니다:</p>
+  {stop_explain}
 
   <h3>출구 2 — 1차 익절에서 절반 팔고, 손절가를 매수가로 올린다</h3>
   <p>1차 익절은 <b>현재가와 최종 익절의 딱 중간</b>입니다. 여기서 절반을 팔면
@@ -481,6 +517,7 @@ def build_guide_html(cfg: Dict) -> str:
 
   <h3>트렌드 템플릿 8개 조건</h3>
   <p>펼친 상세의 오른쪽에 체크리스트로 나옵니다. ✓가 {tmin}개 이상이어야 관문 2를 통과합니다.
+    {c6_note}
     큰 흐름은 <b>"짧은 평균선이 긴 평균선 위에 있고, 주가는 그보다 더 위에 있고,
     1년 최고가 근처에 있다"</b>는 하나의 그림입니다.</p>
   <ol>{criteria_list}</ol>

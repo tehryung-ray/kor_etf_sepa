@@ -167,14 +167,50 @@ def _score_rs(rs_series: pd.Series, reasons: list, benchmark_label: str) -> tupl
     return score, round(rs_slope, 3)
 
 
-def calculate_stop_loss(price_data: pd.DataFrame, current_price: float,
-                        phase_info: Dict, phase: int) -> float:
-    """논리적 손절가 산출 (원본 로직 그대로).
+def calculate_atr(price_data: pd.DataFrame, period: int = 14) -> float:
+    """Average True Range — 그 종목이 하루에 실제로 움직이는 폭.
 
-    Phase 2: 최근 10일 저가 또는 50일선 중 높은 쪽 (타이트한 손절)
-    그 외  : 최근 30일 베이스 저점
-    공통   : 위험폭 3~10% 범위로 강제
+    갭(전일 종가 대비 시가 차이)까지 포함하므로 단순 고가-저가보다 실제
+    변동폭을 잘 나타낸다.
     """
+    if len(price_data) < period + 1:
+        return 0.0
+    high, low = price_data["High"], price_data["Low"]
+    prev_close = price_data["Close"].shift(1)
+    tr = pd.concat([high - low,
+                    (high - prev_close).abs(),
+                    (low - prev_close).abs()], axis=1).max(axis=1)
+    val = tr.rolling(period).mean().iloc[-1]
+    return float(val) if pd.notna(val) else 0.0
+
+
+def calculate_stop_loss(price_data: pd.DataFrame, current_price: float,
+                        phase_info: Dict, phase: int,
+                        stop_mode: str = "swing", atr_period: int = 14,
+                        atr_mult: float = 3.0,
+                        atr_min: float = 0.05, atr_max: float = 0.20) -> float:
+    """논리적 손절가 산출.
+
+    stop_mode="swing" — 원본 로직 그대로.
+        Phase 2: 최근 10일 저가 또는 50일선 중 높은 쪽 (타이트한 손절)
+        그 외  : 최근 30일 베이스 저점
+        공통   : 위험폭 3~10% 범위로 강제
+    stop_mode="atr"   — ATR × 배수. 위험폭은 atr_min~atr_max 범위로 강제.
+        원본의 3~10%는 개별 성장주 기준이라 ETF에는 좁다. 백테스트에서
+        손절 거래의 71%가 6개월 안에 매수가를 회복했다.
+    """
+    if stop_mode == "atr":
+        atr = calculate_atr(price_data, atr_period)
+        if atr > 0:
+            stop = current_price - atr_mult * atr
+            risk = (current_price - stop) / current_price
+            if risk < atr_min:
+                stop = current_price * (1 - atr_min)
+            elif risk > atr_max:
+                stop = current_price * (1 - atr_max)
+            return stop
+        # ATR을 못 구하면 원본 방식으로 되돌아간다
+
     sma_50 = phase_info.get("sma_50", 0)
 
     if phase == 2:
@@ -312,7 +348,11 @@ def score_sepa(code: str,
                template_pass_min: int = 7,
                buy_threshold: int = 60,
                fund_quality_mode: str = "etf",
-               benchmark_label: str = "KOSPI") -> Dict:
+               benchmark_label: str = "KOSPI",
+               stop_mode: str = "swing", atr_period: int = 14,
+               atr_mult: float = 3.0, atr_min: float = 0.05,
+               atr_max: float = 0.20,
+               require_52w_low: bool = False) -> Dict:
     """SEPA 종합 점수를 계산한다. Phase에 관계없이 항상 전 항목을 채점한다.
 
     Returns:
@@ -338,7 +378,9 @@ def score_sepa(code: str,
     volume_score = _score_volume(price_data, reasons)
     rs_score, rs_slope = _score_rs(rs_series, reasons, benchmark_label)
 
-    stop_loss = calculate_stop_loss(price_data, current_price, phase_info, phase)
+    stop_loss = calculate_stop_loss(price_data, current_price, phase_info, phase,
+                                    stop_mode=stop_mode, atr_period=atr_period,
+                                    atr_mult=atr_mult, atr_min=atr_min, atr_max=atr_max)
     rr_score, rr_ratio, target, risk = _score_risk_reward(
         current_price, stop_loss, phase, phase_info, breakout_info, reasons)
 
@@ -351,11 +393,17 @@ def score_sepa(code: str,
 
     # 매수 적격 판정 — 원본 게이트를 여기서만 적용
     passes_template = template["criteria_passed"] >= template_pass_min
+    # ③ 8개 중 유일하게 "실제로 움직이는가"를 묻는 조건. 7/8 기준에서는 이것만
+    #    빠져도 통과하므로, 저변동 상품을 걸러내려면 따로 필수로 둬야 한다.
+    moves_enough = bool(template["criteria_details"].get("price_30pct_above_52w_low"))
+
     blocked = None
     if phase != 2:
         blocked = f"Phase {phase} (미너비니는 Phase 2만 매수)"
     elif not passes_template:
         blocked = f"Trend Template {template['criteria_passed']}/8 (최소 {template_pass_min} 필요)"
+    elif require_52w_low and not moves_enough:
+        blocked = "52주 저가 대비 +30% 미달 (저변동 상품 배제)"
     elif total < buy_threshold:
         blocked = f"SEPA {total:.0f}점 (임계값 {buy_threshold} 미달)"
 
@@ -388,6 +436,8 @@ def score_sepa(code: str,
         "target": round(target),
         "mid_target": round(mid_target) if mid_target else None,
         "risk_amount": round(risk),
+        "stop_mode": stop_mode,
+        "risk_pct": round((current_price - stop_loss) / current_price * 100, 2),
         "risk_reward_ratio": rr_ratio,
         "rs_slope": rs_slope,
         "gap_from_52w_high": gap_52w,
